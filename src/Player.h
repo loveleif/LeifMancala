@@ -16,14 +16,15 @@ class Player {
 	const string name;
 
 public:
-	struct Move {
+	class Move {
+	public:
 		const Player &player;
 		const int pitIndex;
 
 		Move(const Player &player, int pitIndex) : player(player), pitIndex(pitIndex) { }
 	};
 
-	Player(const string &playerName);
+	Player(const string &name);
 	virtual ~Player();
 
 	virtual Player::Move getNextMove() = 0;
