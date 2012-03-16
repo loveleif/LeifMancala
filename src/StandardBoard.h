@@ -16,6 +16,8 @@
 class StandardBoard: public Board {
 	vector<Pit*> pits;
 
+	void incrPitIndex(int &pitIndex);
+
 public:
 	StandardBoard(const vector<Player*> &players, int pitsPerPlayer, int seedsPerHouse);
 	virtual ~StandardBoard();

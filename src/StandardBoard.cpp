@@ -35,6 +35,10 @@ void StandardBoard::move(Player::Move &move) {
 	// TODO Auto-generated method stub
 }
 
+void StandardBoard::incrPitIndex(int &pitIndex) {
+	pitIndex = (pitIndex + 1) % pits.size();
+}
+
 int StandardBoard::countPoints(const Player &player) {
 	// TODO Auto-generated method stub
 	return 0;
