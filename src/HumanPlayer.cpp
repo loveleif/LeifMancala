@@ -9,7 +9,6 @@
 
 HumanPlayer::HumanPlayer(string &name) : super(name) {
 	// TODO Auto-generated constructor stub
-
 }
 
 HumanPlayer::~HumanPlayer() {
