@@ -6,10 +6,25 @@
  */
 
 #include "StandardBoard.h"
-
+#include "Player.h"
+#include <vector>
+#include <cassert>
+using namespace std;
 StandardBoard::StandardBoard(const vector<Player> &players, int pitsPerPlayer, int seedsPerHouse) {
-	// TODO Auto-generated constructor stub
+	// Each player needs at least one house and one store
+	assert(pitsPerPlayer >= 2);
 
+	Pit *house;
+	vector<Player>::const_iterator iter;
+	for (iter = players.begin(); iter != players.end(); ++iter) {
+		for (int iPit = 0; iPit < pitsPerPlayer - 1; ++iPit) {
+			house = new Pit(*iter, false); // Create house
+			for (int iSeed = 0; iSeed < seedsPerHouse; ++iSeed)
+				house->add(Seed()); // Add Seed to House
+			pits.push_back(*house); // Add House to Board
+		}
+		pits.push_back(Pit(*iter, true)); // Add store
+	}
 }
 
 StandardBoard::~StandardBoard() {
