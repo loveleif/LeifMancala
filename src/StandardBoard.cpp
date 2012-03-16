@@ -80,14 +80,10 @@ void StandardBoard::capture(int pitIndex, Player &capturingPlayer) {
 		return;
 
 	Pit *captureStore = getStore(capturingPlayer);
-	Pit *capturedPit;
 
 	// Captured pit does not belong to capturing player
 	if (&*(pits[pitIndex]->getOwner()) != &capturingPlayer) {
-		capturedPit = pits[pitIndex];
-		// Seed transaction
-		while (!capturedPit->isEmpty())
-			captureStore->add(capturedPit->pop());
+		pits[pitIndex]->popAndPushAll(*captureStore);
 		return;
 	}
 
@@ -98,10 +94,7 @@ void StandardBoard::capture(int pitIndex, Player &capturingPlayer) {
 	addPitIndex(pitIndex, -stepsToStore);
 
 	// Seed transaction
-	capturedPit = pits[pitIndex];
-	while (!capturedPit->isEmpty())
-		captureStore->add(capturedPit->pop());
-
+	pits[pitIndex]->popAndPushAll(*captureStore);
 }
 
 int StandardBoard::countPoints(const Player &player) {
