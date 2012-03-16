@@ -15,8 +15,15 @@
 
 class StandardBoard: public Board {
 	vector<Pit*> pits;
+	const int pitsPerPlayer;
+	const vector<Player*> players;
 
-	void incrPitIndex(int &pitIndex);
+	int &incrPitIndex(int &pitIndex);
+	int &decrPitIndex(int &pitIndex);
+	int &addPitIndex(int &pitIndex, int steps);
+	Pit *getStore(Player &player);
+	int sow(int fromPit);
+	void capture(int lastPit, Player &capturingPlayer);
 
 public:
 	StandardBoard(const vector<Player*> &players, int pitsPerPlayer, int seedsPerHouse);
