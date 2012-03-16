@@ -4,6 +4,7 @@ bin/
 gen/
 build/
 lib/
+Debug/
 
 # Compiled source #
 ###################
