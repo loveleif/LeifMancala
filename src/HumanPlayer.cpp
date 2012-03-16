@@ -15,3 +15,8 @@ HumanPlayer::HumanPlayer(string &name) : super(name) {
 HumanPlayer::~HumanPlayer() {
 	// TODO Auto-generated destructor stub
 }
+
+Player::Move HumanPlayer::getNextMove() {
+	// TODO Auto-generated method stub
+	return (Player::Move (*this, 0));
+}

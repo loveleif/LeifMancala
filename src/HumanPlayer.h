@@ -15,6 +15,8 @@ class HumanPlayer: public Player {
 public:
 	HumanPlayer(string &name);
 	virtual ~HumanPlayer();
+
+	Player::Move getNextMove();
 };
 
 #endif /* HUMANPLAYER_H_ */
