@@ -7,7 +7,7 @@
 
 #include "Pit.h"
 
-Pit::Pit(const Player &owner, bool isStore) : mIsStore(isStore), owner(owner) {
+Pit::Pit(Player &owner, bool isStore) : mIsStore(isStore), owner(&owner) {
 }
 
 Pit::~Pit() {
@@ -29,4 +29,8 @@ bool Pit::isEmpty() {
 
 bool Pit::isStore() {
 	return mIsStore;
+}
+
+Player *Pit::getOwner() {
+	return owner;
 }

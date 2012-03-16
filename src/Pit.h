@@ -16,17 +16,18 @@ using namespace std;
 
 class Pit {
 	bool mIsStore;
-	const Player &owner;
+	Player *owner;
 	stack<Seed> seeds;
 
 public:
-	Pit(const Player &owner, bool isStore);
+	Pit(Player &owner, bool isStore);
 	virtual ~Pit();
 
 	void add(Seed seed);
 	Seed pop();
 	bool isEmpty();
 	bool isStore();
+	Player *getOwner();
 };
 
 #endif /* PIT_H_ */
