@@ -17,7 +17,7 @@ class StandardBoard: public Board {
 	vector<Pit*> pits;
 
 public:
-	StandardBoard(const vector<Player> &players, int pitsPerPlayer, int seedsPerHouse);
+	StandardBoard(const vector<Player*> &players, int pitsPerPlayer, int seedsPerHouse);
 	virtual ~StandardBoard();
 
 	void move(Player::Move &move);
