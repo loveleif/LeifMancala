@@ -15,6 +15,7 @@ StandardBoard::StandardBoard(const vector<Player*> &players, int pitsPerPlayer, 
 	// Each player needs at least one house and one store
 	assert(pitsPerPlayer >= 2);
 
+	// Create Pits and Seeds
 	Pit *house;
 	vector<Player*>::const_iterator iter;
 	for (iter = players.begin(); iter != players.end(); ++iter) {
