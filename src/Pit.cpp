@@ -7,7 +7,7 @@
 
 #include "Pit.h"
 
-Pit::Pit(const Player &owner, bool isStore) : owner(owner), mIsStore(isStore) {
+Pit::Pit(const Player &owner, bool isStore) : mIsStore(isStore), owner(owner) {
 }
 
 Pit::~Pit() {

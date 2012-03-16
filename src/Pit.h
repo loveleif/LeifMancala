@@ -16,8 +16,8 @@ using namespace std;
 
 class Pit {
 	bool mIsStore;
-	stack<Seed> seeds;
 	const Player &owner;
+	stack<Seed> seeds;
 
 public:
 	Pit(const Player &owner, bool isStore);
