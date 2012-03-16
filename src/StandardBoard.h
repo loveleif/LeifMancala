@@ -14,7 +14,7 @@
 #include "Board.h"
 
 class StandardBoard: public Board {
-	vector<Pit> pits;
+	vector<Pit*> pits;
 
 public:
 	StandardBoard(const vector<Player> &players, int pitsPerPlayer, int seedsPerHouse);

@@ -21,9 +21,9 @@ StandardBoard::StandardBoard(const vector<Player> &players, int pitsPerPlayer, i
 			house = new Pit(*iter, false); // Create house
 			for (int iSeed = 0; iSeed < seedsPerHouse; ++iSeed)
 				house->add(Seed()); // Add Seed to House
-			pits.push_back(*house); // Add House to Board
+			pits.push_back(house); // Add House to Board
 		}
-		pits.push_back(Pit(*iter, true)); // Add store
+		pits.push_back(new Pit(*iter, true)); // Add store
 	}
 }
 
