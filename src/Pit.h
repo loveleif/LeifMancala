@@ -25,6 +25,8 @@ public:
 
 	void add(Seed seed);
 	Seed pop();
+	void popAndPush(Pit &pushPit);
+	void popAndPushAll(Pit &pushPit);
 	bool isEmpty() const;
 	bool isStore() const;
 	const Player *getOwner() const;

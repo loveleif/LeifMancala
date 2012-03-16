@@ -6,6 +6,7 @@
  */
 
 #include "Pit.h"
+#include <cassert>
 
 Pit::Pit(const Player &owner, bool isStore) : mIsStore(isStore), owner(&owner) {
 }
@@ -18,6 +19,7 @@ void Pit::add(Seed seed) {
 }
 
 Seed Pit::pop() {
+	assert(!isEmpty());
 	Seed out = seeds.top();
 	seeds.pop();
 	return out;
@@ -33,4 +35,13 @@ bool Pit::isStore() const {
 
 const Player *Pit::getOwner() const {
 	return owner;
+}
+
+void Pit::popAndPush(Pit &pushPit) {
+	pushPit.add(pop());
+}
+
+void Pit::popAndPushAll(Pit &pushPit) {
+	while (!isEmpty())
+		popAndPush(pushPit);
 }
