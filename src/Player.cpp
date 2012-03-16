@@ -8,8 +8,6 @@
 #include "Player.h"
 
 Player::Player(const string &name) : name(name) {
-	// TODO Auto-generated constructor stub
-
 }
 
 Player::~Player() { }

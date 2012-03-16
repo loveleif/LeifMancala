@@ -13,7 +13,7 @@
 using namespace std;
 
 class Player {
-	const string name;
+	string name;
 
 public:
 	class Move {
