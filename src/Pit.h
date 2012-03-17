@@ -10,14 +10,14 @@
 
 #include "Seed.h"
 #include "Player.h"
-#include <stack>
+#include <vector>
 
 using namespace std;
 
 class Pit {
 	bool mIsStore;
 	const Player *owner;
-	stack<Seed> seeds;
+	vector<Seed> seeds;
 
 public:
 	Pit(const Player &owner, bool isStore);
@@ -30,6 +30,8 @@ public:
 	bool isEmpty() const;
 	bool isStore() const;
 	const Player *getOwner() const;
+	int getValue() const;
+	int getSeedCount() const;
 };
 
 #endif /* PIT_H_ */

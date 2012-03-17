@@ -15,13 +15,13 @@ Pit::~Pit() {
 }
 
 void Pit::add(Seed seed) {
-	seeds.push(seed);
+	seeds.push_back(seed);
 }
 
 Seed Pit::pop() {
 	assert(!isEmpty());
-	Seed out = seeds.top();
-	seeds.pop();
+	Seed out = seeds[seeds.size() - 1];
+	seeds.pop_back();
 	return out;
 }
 
@@ -44,4 +44,16 @@ void Pit::popAndPush(Pit &pushPit) {
 void Pit::popAndPushAll(Pit &pushPit) {
 	while (!isEmpty())
 		popAndPush(pushPit);
+}
+
+int Pit::getValue() const {
+	int value = 0;
+	vector<Seed>::const_iterator iter;
+	for (iter = seeds.begin(); iter != seeds.end(); ++iter)
+		value += iter->getValue();
+	return value;
+}
+
+int Pit::getSeedCount() const {
+	return seeds.size();
 }

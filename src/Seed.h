@@ -18,7 +18,7 @@ public:
 
 	virtual ~Seed() { }
 
-	int getValue() {
+	int getValue() const {
 		return value;
 	}
 };
