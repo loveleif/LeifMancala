@@ -155,12 +155,12 @@ string StandardBoard::toString() const {
 		reverse = playerIdx % 2;
 
 		for (int i = 0; i < pitsPerPlayer; ++i) {
+
 			sstm << *pits[pitIdx];
 			if (reverse)
 				--pitIdx;
 			else
 				++pitIdx;
-
 		}
 		sstm << " <--- " << players[playerIdx]->getName() << endl;
 		pitIdx += pitsPerPlayer + (reverse ? 1 : -1);

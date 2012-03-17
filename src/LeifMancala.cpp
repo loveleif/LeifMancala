@@ -44,5 +44,6 @@ int main() {
 
 	Board *board = new StandardBoard(players, 7, 5);
 	cout << *board << endl;
+	board->move(p1->getNextMove())
 	return 0;
 }
