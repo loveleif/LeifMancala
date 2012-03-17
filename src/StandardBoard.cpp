@@ -11,7 +11,8 @@
 #include <cassert>
 #include <stdexcept>
 using namespace std;
-StandardBoard::StandardBoard(const vector<Player*> &players, int pitsPerPlayer, int seedsPerHouse) : pitsPerPlayer(pitsPerPlayer), players(players), whosTurnIndex(0) {
+StandardBoard::StandardBoard(const vector<Player*> &players, int pitsPerPlayer, int seedsPerHouse)
+				: pitsPerPlayer(pitsPerPlayer), players(players), whosTurnIndex(0), gameOver(false) {
 	// Each player needs at least one house and one store
 	assert(pitsPerPlayer >= 2);
 
@@ -52,8 +53,20 @@ void StandardBoard::move(Player::Move &move) {
 }
 
 void StandardBoard::nextTurn(int lastSownIndex) {
+	if(checkGameOver())
+		return;
+
 	if (&*(pits[lastSownIndex]) == &*(getStore(*whosTurn())))
-	whosTurnIndex = (whosTurnIndex + 1) % players.size();
+		whosTurnIndex = (whosTurnIndex + 1) % players.size();
+}
+
+bool StandardBoard::checkGameOver() {
+	vector<Pit*>::iterator iter;
+
+	for (iter = pits.begin(); iter != pits.end(); ++iter)
+		if (!(*iter)->isStore() && (*iter)->getSeedCount() > 0)
+			return false;
+	return gameOver = true;
 }
 
 int &StandardBoard::incrPitIndex(int &pitIndex) const {
@@ -122,8 +135,7 @@ int StandardBoard::countPoints(const Player &player) const {
 }
 
 bool StandardBoard::isGameOver() const {
-	// TODO Auto-generated method stub
-	return false;
+	return gameOver;
 }
 
 Player *StandardBoard::whosTurn() const {

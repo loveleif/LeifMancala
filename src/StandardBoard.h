@@ -18,6 +18,7 @@ class StandardBoard: public Board {
 	const int pitsPerPlayer;
 	const vector<Player*> players;
 	int whosTurnIndex;
+	bool gameOver;
 
 	int &incrPitIndex(int &pitIndex) const;
 	int &decrPitIndex(int &pitIndex) const;
@@ -26,6 +27,7 @@ class StandardBoard: public Board {
 	int sow(int fromPit);
 	void capture(int lastPit, const Player &capturingPlayer);
 	void nextTurn(int lastSownIndex);
+	bool checkGameOver();
 
 public:
 	StandardBoard(const vector<Player*> &players, int pitsPerPlayer, int seedsPerHouse);

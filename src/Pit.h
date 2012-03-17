@@ -15,7 +15,7 @@
 using namespace std;
 
 class Pit {
-	bool mIsStore;
+	const bool mIsStore;
 	const Player *owner;
 	vector<Seed> seeds;
 
