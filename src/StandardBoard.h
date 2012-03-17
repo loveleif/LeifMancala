@@ -17,21 +17,24 @@ class StandardBoard: public Board {
 	vector<Pit*> pits;
 	const int pitsPerPlayer;
 	const vector<Player*> players;
+	int whosTurnIndex;
 
-	int &incrPitIndex(int &pitIndex);
-	int &decrPitIndex(int &pitIndex);
-	int &addPitIndex(int &pitIndex, int steps);
-	Pit *getStore(Player &player);
+	int &incrPitIndex(int &pitIndex) const;
+	int &decrPitIndex(int &pitIndex) const;
+	int &addPitIndex(int &pitIndex, int steps) const;
+	Pit *getStore(const Player &player);
 	int sow(int fromPit);
-	void capture(int lastPit, Player &capturingPlayer);
+	void capture(int lastPit, const Player &capturingPlayer);
+	void nextTurn(int lastSownIndex);
 
 public:
 	StandardBoard(const vector<Player*> &players, int pitsPerPlayer, int seedsPerHouse);
 	virtual ~StandardBoard();
 
 	void move(Player::Move &move);
-	int countPoints(const Player &player);
-	bool isGameOver();
+	int countPoints(const Player &player) const;
+	bool isGameOver() const;
+	Player *whosTurn() const;
 };
 
 #endif /* STANDARDBOARD_H_ */

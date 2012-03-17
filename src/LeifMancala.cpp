@@ -18,6 +18,6 @@ int main() {
 	players.push_back(p1);
 	players.push_back(p2);
 
-	Board *board = new StandardBoard(players, 7, 5);
+	//Board *board = new StandardBoard(players, 7, 5);
 	return 0;
 }

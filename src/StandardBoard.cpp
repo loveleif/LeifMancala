@@ -11,7 +11,7 @@
 #include <cassert>
 #include <stdexcept>
 using namespace std;
-StandardBoard::StandardBoard(const vector<Player*> &players, int pitsPerPlayer, int seedsPerHouse) : pitsPerPlayer(pitsPerPlayer), players(players) {
+StandardBoard::StandardBoard(const vector<Player*> &players, int pitsPerPlayer, int seedsPerHouse) : pitsPerPlayer(pitsPerPlayer), players(players), whosTurnIndex(0) {
 	// Each player needs at least one house and one store
 	assert(pitsPerPlayer >= 2);
 
@@ -27,6 +27,7 @@ StandardBoard::StandardBoard(const vector<Player*> &players, int pitsPerPlayer, 
 		}
 		pits.push_back(new Pit(**iter, true)); // Add store
 	}
+
 }
 
 StandardBoard::~StandardBoard() {
@@ -41,22 +42,34 @@ StandardBoard::~StandardBoard() {
 }
 
 void StandardBoard::move(Player::Move &move) {
-	// TODO Auto-generated method stub
+	assert(&(move.player) == &*(pits[move.pitIndex]->getOwner()));
+	assert(!pits[move.pitIndex]->isEmpty());
+
+	int lastSownIndex = sow(move.pitIndex);
+	if (pits[lastSownIndex]->getSeedCount() == 1)
+		capture(lastSownIndex, move.player);
+
+	nextTurn(lastSownIndex);
 }
 
-int &StandardBoard::incrPitIndex(int &pitIndex) {
+void StandardBoard::nextTurn(int lastSownIndex) {
+	if (&*(pits[lastSownIndex]) == &*(getStore(*whosTurn())))
+	whosTurnIndex = (whosTurnIndex + 1) % players.size();
+}
+
+int &StandardBoard::incrPitIndex(int &pitIndex) const {
 	return addPitIndex(pitIndex, 1);
 }
 
-int &StandardBoard::decrPitIndex(int &pitIndex) {
+int &StandardBoard::decrPitIndex(int &pitIndex) const {
 	return addPitIndex(pitIndex, -1);
 }
 
-int &StandardBoard::addPitIndex(int &pitIndex, int steps) {
+int &StandardBoard::addPitIndex(int &pitIndex, int steps) const {
 	return pitIndex = (pitIndex + steps) % pits.size();
 }
 
-Pit *StandardBoard::getStore(Player &player) {
+Pit *StandardBoard::getStore(const Player &player) {
 	Pit *pit;
 	unsigned int pitIndex = pitsPerPlayer - 1;
 	while (pitIndex <= players.size() * pitsPerPlayer) {
@@ -82,7 +95,7 @@ int StandardBoard::sow(int pitIndex) {
 	return pitIndex;
 }
 
-void StandardBoard::capture(int pitIndex, Player &capturingPlayer) {
+void StandardBoard::capture(int pitIndex, const Player &capturingPlayer) {
 	// Captured pit is store
 	if (pits[pitIndex]->isStore())
 		return;
@@ -105,12 +118,16 @@ void StandardBoard::capture(int pitIndex, Player &capturingPlayer) {
 	pits[pitIndex]->popAndPushAll(*captureStore);
 }
 
-int StandardBoard::countPoints(const Player &player) {
+int StandardBoard::countPoints(const Player &player) const {
 	// TODO Auto-generated method stub
 	return 0;
 }
 
-bool StandardBoard::isGameOver() {
+bool StandardBoard::isGameOver() const {
 	// TODO Auto-generated method stub
 	return false;
+}
+
+Player *StandardBoard::whosTurn() const {
+	return players[whosTurnIndex];
 }
