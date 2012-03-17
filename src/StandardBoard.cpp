@@ -42,6 +42,7 @@ StandardBoard::~StandardBoard() {
 }
 
 void StandardBoard::move(Player::Move &move) {
+	assert(!isGameOver());
 	assert(&(move.player) == &*(pits[move.pitIndex]->getOwner()));
 	assert(!pits[move.pitIndex]->isEmpty());
 
