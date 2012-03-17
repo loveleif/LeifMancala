@@ -27,7 +27,6 @@ StandardBoard::StandardBoard(const vector<Player*> &players, int pitsPerPlayer, 
 		}
 		pits.push_back(new Pit(**iter, true)); // Add store
 	}
-
 }
 
 StandardBoard::~StandardBoard() {
@@ -69,7 +68,7 @@ int &StandardBoard::addPitIndex(int &pitIndex, int steps) const {
 	return pitIndex = (pitIndex + steps) % pits.size();
 }
 
-Pit *StandardBoard::getStore(const Player &player) {
+Pit *StandardBoard::getStore(const Player &player) const {
 	Pit *pit;
 	unsigned int pitIndex = pitsPerPlayer - 1;
 	while (pitIndex <= players.size() * pitsPerPlayer) {
@@ -119,8 +118,7 @@ void StandardBoard::capture(int pitIndex, const Player &capturingPlayer) {
 }
 
 int StandardBoard::countPoints(const Player &player) const {
-	// TODO Auto-generated method stub
-	return 0;
+	return getStore(player)->getValue();
 }
 
 bool StandardBoard::isGameOver() const {

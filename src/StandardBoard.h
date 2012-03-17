@@ -22,7 +22,7 @@ class StandardBoard: public Board {
 	int &incrPitIndex(int &pitIndex) const;
 	int &decrPitIndex(int &pitIndex) const;
 	int &addPitIndex(int &pitIndex, int steps) const;
-	Pit *getStore(const Player &player);
+	Pit *getStore(const Player &player) const;
 	int sow(int fromPit);
 	void capture(int lastPit, const Player &capturingPlayer);
 	void nextTurn(int lastSownIndex);
