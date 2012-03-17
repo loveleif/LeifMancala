@@ -11,3 +11,7 @@ Player::Player(const string &name) : name(name) {
 }
 
 Player::~Player() { }
+
+const string &Player::getName() {
+	return name;
+}

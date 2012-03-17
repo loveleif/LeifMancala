@@ -6,7 +6,11 @@
  */
 
 #include "Board.h"
-
+#include <iostream>
 Board::Board() { }
 
 Board::~Board() { }
+
+std::ostream &operator<<(std::ostream &out, const Board &board) {
+	return out << board.toString();
+}

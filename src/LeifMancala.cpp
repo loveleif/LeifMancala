@@ -11,6 +11,7 @@
 #include <vector>
 #include <iostream>
 int main() {
+	cout << "Start:\n";
 	string name1 ("Player 1");
 	string name2 ("Player 2");
 	HumanPlayer *p1 = new HumanPlayer (name1);
@@ -21,8 +22,8 @@ int main() {
 
 	Pit pit1 (*p1, true);
 	Pit pit2 (*p2, false);
-	cout << pit1 << endl;
-	cout << pit2 << endl;
+	//cout << pit1 << endl;
+	//cout << pit2 << endl;
 	pit1.add(Seed());
 	pit1.add(Seed());
 	pit1.add(Seed());
@@ -36,7 +37,9 @@ int main() {
 	pit1.add(Seed());
 	pit1.add(Seed());
 	pit1.add(Seed());
-	cout << pit1 << endl;
-	//Board *board = new StandardBoard(players, 7, 5);
+	//cout << pit1 << endl;
+
+	Board *board = new StandardBoard(players, 7, 5);
+	cout << *board << endl;
 	return 0;
 }

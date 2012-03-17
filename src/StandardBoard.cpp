@@ -10,6 +10,8 @@
 #include <vector>
 #include <cassert>
 #include <stdexcept>
+#include <string>
+#include <sstream>
 using namespace std;
 StandardBoard::StandardBoard(const vector<Player*> &players, int pitsPerPlayer, int seedsPerHouse)
 				: pitsPerPlayer(pitsPerPlayer), players(players), whosTurnIndex(0), gameOver(false) {
@@ -142,3 +144,28 @@ bool StandardBoard::isGameOver() const {
 Player *StandardBoard::whosTurn() const {
 	return players[whosTurnIndex];
 }
+
+string StandardBoard::toString() const {
+	std::stringstream sstm;
+
+	bool reverse = false;
+	int pitIdx = 0;
+	for (unsigned int playerIdx = 0; playerIdx < players.size(); ++playerIdx) {
+
+		reverse = playerIdx % 2;
+
+		for (int i = 0; i < pitsPerPlayer; ++i) {
+			sstm << *pits[pitIdx];
+			if (reverse)
+				--pitIdx;
+			else
+				++pitIdx;
+
+		}
+		sstm << " <--- " << players[playerIdx]->getName() << endl;
+		pitIdx += pitsPerPlayer - 1;
+	}
+	return sstm.str();
+}
+
+

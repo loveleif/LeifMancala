@@ -27,6 +27,7 @@ public:
 	Player(const string &name);
 	virtual ~Player();
 
+	const string &getName();
 	virtual Player::Move getNextMove() = 0;
 };
 

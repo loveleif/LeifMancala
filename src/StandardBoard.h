@@ -8,10 +8,12 @@
 #ifndef STANDARDBOARD_H_
 #define STANDARDBOARD_H_
 
-#include <vector>
 #include "Pit.h"
 #include "Player.h"
 #include "Board.h"
+#include <vector>
+#include <string>
+
 
 class StandardBoard: public Board {
 	vector<Pit*> pits;
@@ -19,6 +21,8 @@ class StandardBoard: public Board {
 	const vector<Player*> players;
 	int whosTurnIndex;
 	bool gameOver;
+
+	friend std::ostream &operator<<(std::ostream &out, const StandardBoard &board);
 
 	int &incrPitIndex(int &pitIndex) const;
 	int &decrPitIndex(int &pitIndex) const;
@@ -37,6 +41,7 @@ public:
 	int countPoints(const Player &player) const;
 	bool isGameOver() const;
 	Player *whosTurn() const;
+	std::string toString() const;
 };
 
 #endif /* STANDARDBOARD_H_ */
