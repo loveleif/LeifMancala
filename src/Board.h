@@ -17,8 +17,8 @@ public:
 	virtual ~Board();
 
 	virtual void move(Player::Move &move) = 0;
-	virtual int countPoints(const Player &player) = 0;
-	virtual bool isGameOver() = 0;
+	virtual int countPoints(const Player &player) const = 0;
+	virtual bool isGameOver() const = 0;
 };
 
 #endif /* BOARD_H_ */
