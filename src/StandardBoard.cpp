@@ -163,7 +163,8 @@ string StandardBoard::toString() const {
 
 		}
 		sstm << " <--- " << players[playerIdx]->getName() << endl;
-		pitIdx += pitsPerPlayer - 1;
+		pitIdx += pitsPerPlayer + (reverse ? 1 : -1);
+
 	}
 	return sstm.str();
 }
