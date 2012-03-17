@@ -7,6 +7,9 @@
 
 #include "Pit.h"
 #include <cassert>
+#include <string>
+#include <sstream>
+#include <iomanip>
 
 Pit::Pit(const Player &owner, bool isStore) : mIsStore(isStore), owner(&owner) {
 }
@@ -56,4 +59,22 @@ int Pit::getValue() const {
 
 int Pit::getSeedCount() const {
 	return seeds.size();
+}
+
+string Pit::toString() const {
+	std::stringstream sstm;
+	if (isStore())
+		sstm << "[[ ";
+	else
+		sstm << "( ";
+	sstm << setw(2) << getSeedCount();
+	if (isStore())
+		sstm << " ]]";
+	else
+		sstm << " )";
+	return sstm.str();
+}
+
+std::ostream &operator<<(std::ostream &out, const Pit &pit) {
+	return out << pit.toString();
 }

@@ -19,6 +19,8 @@ class Pit {
 	const Player *owner;
 	vector<Seed> seeds;
 
+	friend std::ostream &operator<<(std::ostream &out, const Pit &pit);
+
 public:
 	Pit(const Player &owner, bool isStore);
 	virtual ~Pit();
@@ -32,6 +34,7 @@ public:
 	const Player *getOwner() const;
 	int getValue() const;
 	int getSeedCount() const;
+	std::string toString() const;
 };
 
 #endif /* PIT_H_ */
