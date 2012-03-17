@@ -30,6 +30,13 @@ StandardBoard::StandardBoard(const vector<Player*> &players, int pitsPerPlayer, 
 }
 
 StandardBoard::~StandardBoard() {
+	// vector<Pit*> pits - pits will get out of scope and destructed automatically
+	// the vector destructor will destruct all the containing Pits.
+	//
+	// vector<Player*> players - will get out of scope and destructed automatically
+	// the vector destructor will destruct all the containing Players.
+
+
 	// TODO Auto-generated destructor stub
 }
 
