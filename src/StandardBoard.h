@@ -41,6 +41,8 @@ public:
 	int countPoints(const Player &player) const;
 	bool isGameOver() const;
 	Player *whosTurn() const;
+	bool isMyTurn(const Player &player) const;
+	vector<int> getPossibleMoves() const;
 	std::string toString() const;
 };
 

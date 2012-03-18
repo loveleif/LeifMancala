@@ -169,4 +169,20 @@ string StandardBoard::toString() const {
 	return sstm.str();
 }
 
+bool StandardBoard::isMyTurn(const Player &player) const {
+	return &player == &*whosTurn();
+}
 
+/*
+ *  Returns a vector of pit indices that are "moveable". A pit is movable if it
+ *  belongs to the current player in turn, is not a store and is not empty.
+ */
+vector<int> StandardBoard::getPossibleMoves() const {
+	vector<int> possibleMoves;
+	int playerPitStart = whosTurnIndex * pitsPerPlayer;
+	int playerPitEnd = playerPitStart + pitsPerPlayer;
+	for (int pitIdx = playerPitStart; pitIdx < playerPitEnd; ++pitIdx)
+		if (!pits[pitIdx]->isEmpty() && !pits[pitIdx]->isStore())
+			possibleMoves.push_back(pitIdx);
+	return possibleMoves;
+}

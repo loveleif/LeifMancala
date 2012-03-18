@@ -8,6 +8,7 @@
 #ifndef BOARD_H_
 #define BOARD_H_
 
+#include <vector>
 #include "players/Player.h"
 
 
@@ -21,6 +22,10 @@ public:
 	virtual void move(Player::Move &move) = 0;
 	virtual int countPoints(const Player &player) const = 0;
 	virtual bool isGameOver() const = 0;
+	virtual Player *whosTurn() const = 0;
+	virtual bool isMyTurn(const Player &player) const = 0;
+	virtual vector<int> getPossibleMoves() const = 0;
+
 };
 
 #endif /* BOARD_H_ */
