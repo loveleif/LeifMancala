@@ -6,7 +6,7 @@
  */
 
 #include "StandardBoard.h"
-#include "players/Player.h"
+#include "Player.h"
 #include <vector>
 #include <cassert>
 #include <stdexcept>

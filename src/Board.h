@@ -8,7 +8,7 @@
 #ifndef BOARD_H_
 #define BOARD_H_
 
-#include "players/Player.h"
+#include "Player.h"
 
 
 class Board {
