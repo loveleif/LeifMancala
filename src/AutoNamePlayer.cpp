@@ -1,25 +1,25 @@
 /*
- * ComputerPlayer.cpp
+ * AutoNamePlayer.cpp
  *
  *  Created on: Mar 17, 2012
  *      Author: toffe
  */
 
-#include "ComputerPlayer.h"
+#include "AutoNamePlayer.h"
 #include <time.h>
 #include <cstdlib>
 #include <iostream>
 #include <iomanip>
 using namespace std;
 
-unsigned int ComputerPlayer::instanceCount = 0;
+unsigned int AutoNamePlayer::instanceCount = 0;
 
-const char* ComputerPlayer::names[] =
+const char* AutoNamePlayer::names[] =
 	{"HAL 9000", "Deep Thought", "Marvin", "MU-TH-R",
 	 "Bender Bending Rodríguez", "GLaDOS", "Ash", "Bishop", "Project 2501",
 	 "C-3PO", "R2-D2", "K-9", "Dr. Know", "Skynet", "T-1000"};
 
-ComputerPlayer::ComputerPlayer() : super(whatsMyName()) {
+AutoNamePlayer::AutoNamePlayer() : super(whatsMyName()) {
 	++instanceCount;
 }
 
@@ -28,7 +28,7 @@ ComputerPlayer::ComputerPlayer() : super(whatsMyName()) {
  *  at first instantiation and then new instantiations gets names according to
  *  the randomized order.
  */
-const char* ComputerPlayer::whatsMyName() {
+const char* AutoNamePlayer::whatsMyName() {
 	if (instanceCount == 0) {
 		// Shuffle names
 		srand(time(NULL));
@@ -38,7 +38,7 @@ const char* ComputerPlayer::whatsMyName() {
 	return names[(instanceCount) % NAMES_SIZE];
 }
 
-ComputerPlayer::~ComputerPlayer() {
+AutoNamePlayer::~AutoNamePlayer() {
 	// TODO Auto-generated destructor stub
 }
 
