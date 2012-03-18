@@ -1,18 +1,18 @@
 /*
- * AutoNamePlayer.h
+ * ComputerPlayer.h
  *
  *  Created on: Mar 17, 2012
  *      Author: toffe
  */
 
-#ifndef AUTONAMEPLAYER_H_
-#define AUTONAMEPLAYER_H_
+#ifndef COMPUTERPLAYER_H_
+#define COMPUTERPLAYER_H_
 #define NAMES_SIZE 15
 
 #include "Player.h"
 #include <string>
 #include <vector>
-class AutoNamePlayer: public Player {
+class ComputerPlayer: public Player {
 	typedef Player super;
 
 	const static char* names[NAMES_SIZE];
@@ -20,10 +20,10 @@ class AutoNamePlayer: public Player {
 
 	const char* whatsMyName();
 public:
-	AutoNamePlayer();
-	virtual ~AutoNamePlayer();
+	ComputerPlayer();
+	virtual ~ComputerPlayer();
 
 	virtual Player::Move getNextMove() = 0;
 };
 
-#endif /* AUTONAMEPLAYER_H_ */
+#endif /* COMPUTERPLAYER_H_ */
