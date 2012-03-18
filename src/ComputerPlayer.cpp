@@ -42,6 +42,3 @@ ComputerPlayer::~ComputerPlayer() {
 	// TODO Auto-generated destructor stub
 }
 
-Player::Move ComputerPlayer::getNextMove() {
-
-}

@@ -23,7 +23,7 @@ public:
 	ComputerPlayer();
 	virtual ~ComputerPlayer();
 
-	Player::Move getNextMove();
+	virtual Player::Move getNextMove() = 0;
 };
 
 #endif /* COMPUTERPLAYER_H_ */
