@@ -16,7 +16,7 @@ public:
 	RandomPlayer();
 	virtual ~RandomPlayer();
 
-	Player::Move getNextMove(const Board &board);
+	Player::Move *getNextMove(const Board &board);
 };
 
 #endif /* RANDOMPLAYER_H_ */

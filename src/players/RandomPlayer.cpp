@@ -18,8 +18,8 @@ RandomPlayer::~RandomPlayer() {
 	// TODO Auto-generated destructor stub
 }
 
-Player::Move RandomPlayer::getNextMove(const Board &board) {
+Player::Move *RandomPlayer::getNextMove(const Board &board) {
 	vector<int> possibleMoves = board.getPossibleMoves();
 	int picked = Util::pickRandom(possibleMoves);
-	return Player::Move (*this, picked);
+	return new Player::Move (*this, picked);
 }
