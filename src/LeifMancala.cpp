@@ -10,7 +10,10 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <time.h>
+#include <cstdlib>
 int main() {
+	srand(time(NULL));
 	cout << "Start:\n";
 	string name1 ("Player 1");
 	string name2 ("Player 2");

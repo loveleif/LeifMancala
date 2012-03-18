@@ -6,7 +6,6 @@
  */
 
 #include "ComputerPlayer.h"
-#include <time.h>
 #include <cstdlib>
 #include <iostream>
 #include <iomanip>
@@ -31,7 +30,6 @@ ComputerPlayer::ComputerPlayer() : super(whatsMyName()) {
 const char* ComputerPlayer::whatsMyName() {
 	if (instanceCount == 0) {
 		// Shuffle names
-		srand(time(NULL));
 		for (int i = 0; i < NAMES_SIZE; ++i)
 			swap(names[i], names[rand() % (NAMES_SIZE - i) + i]);
 	}
