@@ -12,6 +12,7 @@
 #include <stdexcept>
 #include <string>
 #include <sstream>
+#include <iostream>
 using namespace std;
 StandardBoard::StandardBoard(const vector<Player*> &players, int pitsPerPlayer, int seedsPerHouse)
 				: pitsPerPlayer(pitsPerPlayer), players(players), whosTurnIndex(0), gameOver(false) {
@@ -44,6 +45,7 @@ StandardBoard::~StandardBoard() {
 }
 
 void StandardBoard::move(Player::Move &move) {
+	cout << "About to make move on pit " << move.getPitIndex() << endl;
 	assert(!isGameOver());
 	assert(&*(move.getPlayer()) == &*(pits[move.getPitIndex()]->getOwner()));
 	assert(!pits[move.getPitIndex()]->isEmpty());
@@ -55,11 +57,50 @@ void StandardBoard::move(Player::Move &move) {
 	nextTurn(lastSownIndex);
 }
 
+/*
+ * Sows all the seed from the specified pit index. Sowing will move around the
+ * board and put one seed per pit until the sowing pit is depleted.
+ *
+ * pitIndex - index of pit to sow from
+ * returns - pit index of the last pit to get sown
+ */
+int StandardBoard::sow(int pitIndex) {
+	Pit *fromPit = pits[pitIndex];
+	while (!fromPit->isEmpty()) {
+		cout << "About to sow pit: " << pitIndex << endl;
+		pits[incrPitIndex(pitIndex)]->add(fromPit->pop());
+	}
+	return pitIndex;
+}
+
+void StandardBoard::capture(int pitIndex, const Player &capturingPlayer) {
+	// Captured pit is store
+	if (pits[pitIndex]->isStore())
+		return;
+
+	Pit *captureStore = getStore(capturingPlayer);
+
+	// Captured pit does not belong to capturing player
+	if (&*(pits[pitIndex]->getOwner()) != &capturingPlayer) {
+		pits[pitIndex]->popAndPushAll(*captureStore);
+		return;
+	}
+
+	//Captured pit belongs to capturing player
+	int stepsToStore = 0;
+	while (!pits[decrPitIndex(pitIndex)]->isStore())
+		++stepsToStore;
+	addPitIndex(pitIndex, -stepsToStore);
+
+	// Seed transaction
+	pits[pitIndex]->popAndPushAll(*captureStore);
+}
+
 void StandardBoard::nextTurn(int lastSownIndex) {
 	if(checkGameOver())
 		return;
 
-	if (&*(pits[lastSownIndex]) == &*(getStore(*whosTurn())))
+	if (&*(pits[lastSownIndex]) != &*(getStore(*whosTurn())))
 		whosTurnIndex = (whosTurnIndex + 1) % players.size();
 }
 
@@ -94,43 +135,6 @@ Pit *StandardBoard::getStore(const Player &player) const {
 			return pit;
 	}
 	throw logic_error("Didn't fins store.");
-}
-
-/*
- * Sows all the seed from the specified pit index. Sowing will move around the
- * board and put one seed per pit until the sowing pit is depleted.
- *
- * pitIndex - index of pit to sow from
- * returns - pit index of the last pit to get sown
- */
-int StandardBoard::sow(int pitIndex) {
-	Pit *fromPit = pits[pitIndex];
-	while (!fromPit->isEmpty())
-		pits[incrPitIndex(pitIndex)]->add(fromPit->pop());
-	return pitIndex;
-}
-
-void StandardBoard::capture(int pitIndex, const Player &capturingPlayer) {
-	// Captured pit is store
-	if (pits[pitIndex]->isStore())
-		return;
-
-	Pit *captureStore = getStore(capturingPlayer);
-
-	// Captured pit does not belong to capturing player
-	if (&*(pits[pitIndex]->getOwner()) != &capturingPlayer) {
-		pits[pitIndex]->popAndPushAll(*captureStore);
-		return;
-	}
-
-	//Captured pit belongs to capturing player
-	int stepsToStore = 0;
-	while (!pits[decrPitIndex(pitIndex)]->isStore())
-		++stepsToStore;
-	addPitIndex(pitIndex, -stepsToStore);
-
-	// Seed transaction
-	pits[pitIndex]->popAndPushAll(*captureStore);
 }
 
 int StandardBoard::countPoints(const Player &player) const {
