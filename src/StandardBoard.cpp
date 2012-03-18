@@ -45,12 +45,12 @@ StandardBoard::~StandardBoard() {
 
 void StandardBoard::move(Player::Move &move) {
 	assert(!isGameOver());
-	assert(&(move.player) == &*(pits[move.pitIndex]->getOwner()));
-	assert(!pits[move.pitIndex]->isEmpty());
+	assert(&*(move.getPlayer()) == &*(pits[move.getPitIndex()]->getOwner()));
+	assert(!pits[move.getPitIndex()]->isEmpty());
 
-	int lastSownIndex = sow(move.pitIndex);
+	int lastSownIndex = sow(move.getPitIndex());
 	if (pits[lastSownIndex]->getSeedCount() == 1)
-		capture(lastSownIndex, move.player);
+		capture(lastSownIndex, *move.getPlayer());
 
 	nextTurn(lastSownIndex);
 }

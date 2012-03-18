@@ -21,11 +21,13 @@ class Player {
 
 public:
 	class Move {
+		Player *player;
+		int pitIndex;
 	public:
-		const Player &player;
-		const int pitIndex;
+		Move(Player &player, int pitIndex) : player(&player), pitIndex(pitIndex) { }
 
-		Move(const Player &player, int pitIndex) : player(player), pitIndex(pitIndex) { }
+		const Player *getPlayer() { return player; }
+		int getPitIndex() { return pitIndex; }
 	};
 
 	Player(const string &name);
