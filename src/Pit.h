@@ -9,7 +9,7 @@
 #define PIT_H_
 
 #include "Seed.h"
-#include "Player.h"
+#include "players/Player.h"
 #include <vector>
 
 using namespace std;

@@ -11,7 +11,8 @@
 #define PLAYER_H_
 
 #include <string>
-#include "../Board.h"
+//#include "Board.h"
+class Board;
 
 using namespace std;
 

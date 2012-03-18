@@ -15,7 +15,7 @@ HumanPlayer::~HumanPlayer() {
 	// TODO Auto-generated destructor stub
 }
 
-Player::Move HumanPlayer::getNextMove() {
+Player::Move HumanPlayer::getNextMove(const Board &board) {
 	// TODO Auto-generated method stub
 	return (Player::Move (*this, 0));
 }

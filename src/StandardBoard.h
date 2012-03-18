@@ -9,7 +9,7 @@
 #define STANDARDBOARD_H_
 
 #include "Pit.h"
-#include "Player.h"
+#include "players/Player.h"
 #include "Board.h"
 #include <vector>
 #include <string>

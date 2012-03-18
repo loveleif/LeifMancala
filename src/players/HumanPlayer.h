@@ -16,7 +16,7 @@ public:
 	HumanPlayer(string &name);
 	virtual ~HumanPlayer();
 
-	Player::Move getNextMove();
+	Player::Move getNextMove(const Board &board);
 };
 
 #endif /* HUMANPLAYER_H_ */

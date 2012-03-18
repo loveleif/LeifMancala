@@ -5,8 +5,8 @@
  *      Author: toffe
  */
 #include "StandardBoard.h"
-#include "HumanPlayer.h"
-#include "Player.h"
+#include "players/HumanPlayer.h"
+#include "players/Player.h"
 #include <string>
 #include <vector>
 #include <iostream>
