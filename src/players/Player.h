@@ -5,10 +5,13 @@
  *      Author: toffe
  */
 
+
+
 #ifndef PLAYER_H_
 #define PLAYER_H_
 
 #include <string>
+#include "../Board.h"
 
 using namespace std;
 
@@ -28,7 +31,7 @@ public:
 	virtual ~Player();
 
 	const string &getName();
-	virtual Player::Move getNextMove() = 0;
+	virtual Player::Move getNextMove(const Board &board) = 0;
 };
 
 #endif /* PLAYER_H_ */

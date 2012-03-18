@@ -44,6 +44,7 @@
 </inputType>
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.assembler.exe.debug.2038413363" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.exe.debug">
+<option id="gnu.both.asm.option.include.paths.893866484" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath"/>
 <inputType id="cdt.managedbuild.tool.gnu.assembler.input.1618739519" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 </tool>
 </toolChain>
