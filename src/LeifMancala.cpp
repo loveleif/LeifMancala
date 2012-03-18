@@ -6,46 +6,51 @@
  */
 #include "StandardBoard.h"
 #include "players/HumanPlayer.h"
+#include "players/RandomPlayer.h"
 #include "players/Player.h"
 #include <string>
 #include <vector>
 #include <iostream>
 #include <time.h>
 #include <cstdlib>
+
+int readInt() {
+   string strInput;
+   getline(cin, strInput);
+   int input = atoi(strInput.c_str());
+   return input;
+}
+
 int main() {
 	srand(time(NULL));
-	cout << "Start:\n";
-	string name1 ("Player 1");
-	string name2 ("Player 2");
-	string name3 ("Player 3");
-	HumanPlayer *p1 = new HumanPlayer (name1);
-	HumanPlayer *p2 = new HumanPlayer (name2);
-	HumanPlayer *p3 = new HumanPlayer (name3);
+
+
+	string name ("Human");
+	Player *p1 = new HumanPlayer (name);
+	Player *p2 = new RandomPlayer ();
 	vector<Player*> players;
 	players.push_back(p1);
 	players.push_back(p2);
-	players.push_back(p3);
 
-	Pit pit1 (*p1, true);
-	Pit pit2 (*p2, false);
-	//cout << pit1 << endl;
-	//cout << pit2 << endl;
-	pit1.add(Seed());
-	pit1.add(Seed());
-	pit1.add(Seed());
-	pit1.add(Seed());
-	pit1.add(Seed());
-	pit1.add(Seed());
-	pit1.add(Seed());
-	pit1.add(Seed());
-	pit1.add(Seed());
-	pit1.add(Seed());
-	pit1.add(Seed());
-	pit1.add(Seed());
-	pit1.add(Seed());
-	//cout << pit1 << endl;
 
+	Player::Move *move;
 	Board *board = new StandardBoard(players, 7, 5);
-	cout << *board << endl;
+	while (!board->isGameOver()) {
+		cout << *board << "\n\n";
+
+		if (board->isMyTurn(*p1)) {
+			move = new Player::Move(*p1, readInt());
+			board->move(*move);
+		} else {
+			board->move(*p2->getNextMove(*board));
+		}
+
+	}
+
+
+	delete board;
+	delete move;
 	return 0;
 }
+
+
