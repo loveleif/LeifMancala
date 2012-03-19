@@ -158,23 +158,29 @@ Player *StandardBoard::whosTurn() const {
 }
 
 string StandardBoard::toString() const {
-	std::stringstream sstm;
+	std::stringstream sstm, houses, store;
 
 	bool reverse = false;
 	int pitIdx = 0;
 	for (unsigned int playerIdx = 0; playerIdx < players.size(); ++playerIdx) {
-
 		reverse = playerIdx % 2;
 
-		for (int i = 0; i < pitsPerPlayer; ++i) {
-
-			sstm << *pits[pitIdx];
-			if (reverse)
-				--pitIdx;
-			else
-				++pitIdx;
+		if (reverse)
+			store << *pits[pitIdx--];
+		for (int i = 0; i < pitsPerPlayer - 1; ++i) {
+			houses << *pits[pitIdx];
+			pitIdx = reverse ? pitIdx - 1 : pitIdx + 1;
 		}
-		sstm << " <--- " << players[playerIdx]->getName() << endl;
+		if (!reverse)
+			store << string (8 + houses.str().size(), ' ') << *pits[pitIdx++];
+
+		sstm << string (8, ' ') << houses.str() << endl;
+		sstm << store.str() << endl;
+
+		houses.str(string());
+		store.str(string());
+
+		//sstm << " <--- " << players[playerIdx]->getName() << endl;
 		pitIdx += pitsPerPlayer + (reverse ? 1 : -1);
 
 	}
