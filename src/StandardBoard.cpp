@@ -13,6 +13,7 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include "Util.h"
 using namespace std;
 StandardBoard::StandardBoard(const vector<Player*> &players, int pitsPerPlayer, int seedsPerHouse)
 				: pitsPerPlayer(pitsPerPlayer), players(players), whosTurnIndex(0), gameOver(false) {
@@ -45,7 +46,6 @@ StandardBoard::~StandardBoard() {
 }
 
 void StandardBoard::move(Player::Move &move) {
-	cout << "About to make move on pit " << move.getPitIndex() << endl;
 	assert(!isGameOver());
 	assert(&*(move.getPlayer()) == &*(pits[move.getPitIndex()]->getOwner()));
 	assert(!pits[move.getPitIndex()]->isEmpty());
@@ -66,10 +66,8 @@ void StandardBoard::move(Player::Move &move) {
  */
 int StandardBoard::sow(int pitIndex) {
 	Pit *fromPit = pits[pitIndex];
-	while (!fromPit->isEmpty()) {
-		cout << "About to sow pit: " << pitIndex << endl;
+	while (!fromPit->isEmpty())
 		pits[incrPitIndex(pitIndex)]->add(fromPit->pop());
-	}
 	return pitIndex;
 }
 
@@ -80,36 +78,45 @@ void StandardBoard::capture(int pitIndex, const Player &capturingPlayer) {
 
 	Pit *captureStore = getStore(capturingPlayer);
 
-	// Captured pit does not belong to capturing player
-	if (&*(pits[pitIndex]->getOwner()) != &capturingPlayer) {
+	if (&*pits[pitIndex]->getOwner() != &capturingPlayer) {
+		// Captured pit does not belong to capturing player
 		pits[pitIndex]->popAndPushAll(*captureStore);
 		return;
 	}
 
-	//Captured pit belongs to capturing player
-	int stepsToStore = 0;
-	while (!pits[decrPitIndex(pitIndex)]->isStore())
-		++stepsToStore;
-	addPitIndex(pitIndex, -stepsToStore);
+	// Captured pit belongs to capturing player
 
-	// Seed transaction
-	pits[pitIndex]->popAndPushAll(*captureStore);
+	int tmpPitIdx = pitIndex;
+	int stepsToLastStore = 1;
+	while (!pits[decrPitIndex(tmpPitIdx)]->isStore())
+		++stepsToLastStore;
+	int stepstoNextStore = pitsPerPlayer - stepsToLastStore;
+
+	// Seed transactions
+	for (unsigned int i = 0; i < players.size(); ++i) {
+		if (i % 2 == 0)
+			addPitIndex(pitIndex, 2 * stepstoNextStore);
+		else
+			addPitIndex(pitIndex, 2 * stepsToLastStore);
+		pits[pitIndex]->popAndPushAll(*captureStore);
+	}
 }
 
 void StandardBoard::nextTurn(int lastSownIndex) {
 	if(checkGameOver())
 		return;
 
-	if (&*(pits[lastSownIndex]) != &*(getStore(*whosTurn())))
+	if (&*pits[lastSownIndex] != &*getStore(*whosTurn()))
 		whosTurnIndex = (whosTurnIndex + 1) % players.size();
 }
 
 bool StandardBoard::checkGameOver() {
 	vector<Pit*>::iterator iter;
 
-	for (iter = pits.begin(); iter != pits.end(); ++iter)
+	for (iter = pits.begin(); iter != pits.end(); ++iter) {
 		if (!(*iter)->isStore() && (*iter)->getSeedCount() > 0)
 			return false;
+	}
 	return gameOver = true;
 }
 
@@ -122,19 +129,20 @@ int &StandardBoard::decrPitIndex(int &pitIndex) const {
 }
 
 int &StandardBoard::addPitIndex(int &pitIndex, int steps) const {
-	return pitIndex = (pitIndex + steps) % pits.size();
+	return pitIndex = Util::mod(pitIndex + steps, pits.size());
 }
 
 Pit *StandardBoard::getStore(const Player &player) const {
 	Pit *pit;
 	unsigned int pitIndex = pitsPerPlayer - 1;
-	while (pitIndex <= players.size() * pitsPerPlayer) {
+	while (pitIndex < pits.size()) {
 		pit = pits[pitIndex];
 		assert(pit->isStore()); // Just to be on the safe side
 		if (&*(pit->getOwner()) == &player)
 			return pit;
+		pitIndex += pitsPerPlayer;
 	}
-	throw logic_error("Didn't fins store.");
+	throw logic_error("Didn't find store.");
 }
 
 int StandardBoard::countPoints(const Player &player) const {
