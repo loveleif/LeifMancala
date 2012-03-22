@@ -50,14 +50,14 @@ StandardBoard::~StandardBoard() {
 
 void StandardBoard::move(Player::Move &move) {
 	assert(!isGameOver());
-	assert(&*(move.getPlayer()) == &*(pits[move.getPitIndex()]->getOwner()));
+	assert(&move.getPlayer() == &*(pits[move.getPitIndex()]->getOwner()));
 	assert(!pits[move.getPitIndex()]->isEmpty());
 
-	log() << "Move: " << move.getPlayer()->getName() << " on pit " << toRelPitIdx(move.getPitIndex()) << " (relative)" << endl;
+	log() << "Move: " << move.getPlayer().getName() << " on pit " << toRelPitIdx(move.getPitIndex()) << " (relative)" << endl;
 
 	int lastSownIndex = sow(move.getPitIndex());
 	if (pits[lastSownIndex]->getSeedCount() == 1)
-		capture(lastSownIndex, *move.getPlayer());
+		capture(lastSownIndex, move.getPlayer());
 
 	nextTurn(lastSownIndex);
 }
@@ -81,7 +81,7 @@ void StandardBoard::capture(int pitIndex, const Player &capturingPlayer) {
 	if (pits[pitIndex]->isStore())
 		return;
 
-	Pit *captureStore = getStore(capturingPlayer);
+	Pit *captureStore = &getStore(capturingPlayer);
 
 	if (&*pits[pitIndex]->getOwner() != &capturingPlayer) {
 		// Captured pit does not belong to capturing player
@@ -116,10 +116,10 @@ void StandardBoard::nextTurn(int lastSownIndex) {
 	if(checkGameOver())
 		return;
 
-	if (&*pits[lastSownIndex] != &*getStore(*whosTurn()))
+	if (&*pits[lastSownIndex] != &getStore(whosTurn()))
 		whosTurnIndex = (whosTurnIndex + 1) % players.size();
 
-	log() << *whosTurn() << "'s turn." << endl;
+	log() << whosTurn() << "'s turn." << endl;
 }
 
 bool StandardBoard::checkGameOver() {
@@ -144,32 +144,32 @@ int &StandardBoard::addPitIndex(int &pitIndex, int steps) const {
 	return pitIndex = Util::mod(pitIndex + steps, pits.size());
 }
 
-Pit *StandardBoard::getStore(const Player &player) const {
+Pit& StandardBoard::getStore(const Player &player) const {
 	Pit *pit;
 	unsigned int pitIndex = pitsPerPlayer - 1;
 	while (pitIndex < pits.size()) {
 		pit = pits[pitIndex];
 		assert(pit->isStore()); // Just to be on the safe side
 		if (&*(pit->getOwner()) == &player)
-			return pit;
+			return *pit;
 		pitIndex += pitsPerPlayer;
 	}
 	throw logic_error("Didn't find store.");
 }
 
 int StandardBoard::countPoints(const Player &player) const {
-	return getStore(player)->getValue();
+	return getStore(player).getValue();
 }
 
 bool StandardBoard::isGameOver() const {
 	return gameOver;
 }
 
-Player *StandardBoard::whosTurn() const {
-	return players[whosTurnIndex];
+Player& StandardBoard::whosTurn() const {
+	return *players[whosTurnIndex];
 }
 
-string StandardBoard::pitsToString(unsigned int fromIdx, int n) const {
+string& StandardBoard::pitsToString(string& out, unsigned int fromIdx, int n) const {
 	stringstream sstm;
 	int pitStep = (n < 0) ? -1 : 1;
 	n = abs(n);
@@ -179,27 +179,29 @@ string StandardBoard::pitsToString(unsigned int fromIdx, int n) const {
 		addPitIndex(pitIdx, pitStep);
 	}
 
-	return sstm.str();
+	out = sstm.str();
+	return out;
 }
 
-string StandardBoard::indexBar() const {
+string& StandardBoard::indexBar(string& out) const {
 	stringstream sstm;
 	for (int i = 0; i < pitsPerPlayer - 1; ++i)
 		sstm << "   " << i+1 << "  ";
 	sstm << "\n";
 	sstm << "------------------------------------";
 	sstm << "\n" << endl;
-	return sstm.str();
+	out = sstm.str();
+	return out;
 }
 
-string StandardBoard::toString2Players() const {
+string& StandardBoard::toString2Players(string& out) const {
 	std::stringstream sstm;
-	string houses;
+	string houses, tmp;
 
-	sstm << indexBar();
+	sstm << indexBar(tmp);
 
 	// Player 1 houses
-	houses = pitsToString(0, pitsPerPlayer - 1);
+	pitsToString(houses, 0, pitsPerPlayer - 1);
 	sstm << BLANK_PIT << "--->\n";
 	sstm << BLANK_PIT << houses << BLANK_PIT << " " << players[0]->getName() << "\n";
 
@@ -207,21 +209,22 @@ string StandardBoard::toString2Players() const {
 	sstm << *pits[pitsPerPlayer - 1] << string (houses.size(), ' ') << *pits[2 * pitsPerPlayer - 1] << endl;
 
 	// Player 2 houses
-	houses = pitsToString(pits.size() - 2, -(pitsPerPlayer - 1));
+	pitsToString(houses, pits.size() - 2, -(pitsPerPlayer - 1));
 	sstm << BLANK_PIT << houses << BLANK_PIT << players[1]->getName() << "\n";
 	sstm << string (8 + houses.size() - 4, ' ') << "<---" << "\n";
 
-	return sstm.str();
+	out = sstm.str();
+	return out;
 }
 
-string StandardBoard::toString() const {
+string& StandardBoard::toString(string& out) const {
 	if (players.size() == 2)
-		return toString2Players();
+		return toString2Players(out);
 
 	stringstream sstm;
-	string houses;
+	string houses, tmp;
 
-	sstm << indexBar();
+	sstm << indexBar(tmp);
 
 	bool reverse = false, playerTurn;
 	int startIdx = 0, n;
@@ -233,7 +236,7 @@ string StandardBoard::toString() const {
 			startIdx = playerIdx * pitsPerPlayer;
 
 		n = (pitsPerPlayer - 1) * (reverse ? -1 : 1);
-		houses = pitsToString(startIdx, n);
+		pitsToString(houses, startIdx, n);
 
 		if (reverse)
 			sstm << string(houses.size() - 4, ' ');
@@ -253,19 +256,22 @@ string StandardBoard::toString() const {
 
 	}
 
-	return sstm.str();
+	out = sstm.str();
+	return out;
 }
 
 bool StandardBoard::isMyTurn(const Player &player) const {
-	return &player == &*whosTurn();
+	return &player == &whosTurn();
 }
 
 /*
- *  Returns a vector of pit indices that are "moveable". A pit is movable if it
- *  belongs to the current player in turn, is not a store and is not empty.
+ *  Adds pit indices that are "moveable" to the supplied vector. A pit is
+ *  movable if it belongs to the current player in turn, is not a store and
+ *  is not empty.
  */
-vector<int> StandardBoard::getPossibleMoves() const {
-	vector<int> possibleMoves;
+vector<int>& StandardBoard::getPossibleMoves(vector<int>& possibleMoves) const {
+	possibleMoves.clear();
+
 	int playerPitStart = whosTurnIndex * pitsPerPlayer;
 	int playerPitEnd = playerPitStart + pitsPerPlayer;
 	for (int pitIdx = playerPitStart; pitIdx < playerPitEnd; ++pitIdx)

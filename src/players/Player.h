@@ -28,7 +28,7 @@ public:
 	public:
 		Move(Player &player, int pitIndex) : player(&player), pitIndex(pitIndex) { }
 
-		const Player *getPlayer() { return player; }
+		const Player& getPlayer() { return *player; }
 		int getPitIndex() { return pitIndex; }
 	};
 

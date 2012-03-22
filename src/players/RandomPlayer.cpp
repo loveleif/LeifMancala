@@ -19,7 +19,8 @@ RandomPlayer::~RandomPlayer() {
 }
 
 Player::Move *RandomPlayer::getNextMove(const Board &board) {
-	vector<int> possibleMoves = board.getPossibleMoves();
+	vector<int> possibleMoves;
+	board.getPossibleMoves(possibleMoves);
 	int picked = Util::pickRandom(possibleMoves);
 	return new Player::Move (*this, picked);
 }

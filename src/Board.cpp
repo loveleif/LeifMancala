@@ -12,5 +12,6 @@ Board::Board() { }
 Board::~Board() { }
 
 std::ostream &operator<<(std::ostream &out, const Board &board) {
-	return out << board.toString();
+	string strBoard;
+	return out << board.toString(strBoard);
 }

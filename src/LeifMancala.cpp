@@ -50,7 +50,7 @@ int main() {
 			move = new Player::Move(*p1, board->toAbsPitIdx(pi));
 			board->move(*move);
 		} else {
-			board->move(*board->whosTurn()->getNextMove(*board));
+			board->move(*board->whosTurn().getNextMove(*board));
 		}
 	}
 	cout << "Game Over!" << endl;
