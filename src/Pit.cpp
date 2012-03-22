@@ -64,14 +64,21 @@ int Pit::getSeedCount() const {
 string Pit::toString() const {
 	std::stringstream sstm;
 	if (isStore())
-		sstm << "[[ ";
+		sstm << "[[";
 	else
-		sstm << "( ";
-	sstm << setw(2) << getSeedCount();
+		sstm << "(";
+
+	if (getSeedCount() < 1000)
+		sstm << setw(3) << getSeedCount() << " ";
+	else if (getSeedCount() < 10000)
+		sstm << getSeedCount();
+	else
+		sstm << "####";
+
 	if (isStore())
-		sstm << " ]]";
+		sstm << "]]";
 	else
-		sstm << " )";
+		sstm << ")";
 	return sstm.str();
 }
 

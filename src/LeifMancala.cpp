@@ -27,12 +27,15 @@ int main() {
 
 	string name ("Human");
 	string name2 ("Human 2");
+	string name3 ("Mr man");
 	Player *p1 = new HumanPlayer (name);
 	//Player *p2 = new RandomPlayer ();
-	Player *p2 = new HumanPlayer (name2);
+	Player *p2 = new RandomPlayer;
+	Player *p3 = new RandomPlayer;
 	vector<Player*> players;
 	players.push_back(p1);
 	players.push_back(p2);
+	players.push_back(p3);
 
 	int pi;
 	Player::Move *move;
@@ -42,17 +45,12 @@ int main() {
 
 		if (board->isMyTurn(*p1)) {
 			//pi = readInt();
-			cout << "Player 1: ";
+			cout << "Make move: ";
 			cin >> pi;
-			move = new Player::Move(*p1, pi);
+			move = new Player::Move(*p1, board->toAbsPitIdx(pi));
 			board->move(*move);
 		} else {
-			//board->move(*p2->getNextMove(*board));
-			//pi = readInt();
-			cout << "Player 2: ";
-			cin >> pi;
-			move = new Player::Move(*p2, pi);
-			board->move(*move);
+			board->move(*board->whosTurn()->getNextMove(*board));
 		}
 	}
 	cout << "Game Over!" << endl;

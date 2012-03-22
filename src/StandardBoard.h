@@ -21,6 +21,7 @@ class StandardBoard: public Board {
 	const vector<Player*> players;
 	int whosTurnIndex;
 	bool gameOver;
+	static const char BLANK_PIT[];
 
 	friend std::ostream &operator<<(std::ostream &out, const StandardBoard &board);
 
@@ -32,6 +33,10 @@ class StandardBoard: public Board {
 	void capture(int lastPit, const Player &capturingPlayer);
 	void nextTurn(int lastSownIndex);
 	bool checkGameOver();
+	string toString2Players() const;
+	string pitsToString(unsigned int fromIdx, int n) const;
+	string indexBar() const;
+	ostream &log();
 
 public:
 	StandardBoard(const vector<Player*> &players, int pitsPerPlayer, int seedsPerHouse);
@@ -44,6 +49,8 @@ public:
 	bool isMyTurn(const Player &player) const;
 	vector<int> getPossibleMoves() const;
 	std::string toString() const;
+	int toAbsPitIdx(int relPitIdx) const;
+	int toRelPitIdx(int absPitIdx) const;
 };
 
 #endif /* STANDARDBOARD_H_ */

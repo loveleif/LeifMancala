@@ -25,7 +25,8 @@ public:
 	virtual Player *whosTurn() const = 0;
 	virtual bool isMyTurn(const Player &player) const = 0;
 	virtual vector<int> getPossibleMoves() const = 0;
-
+	virtual int toAbsPitIdx(int relPitIdx) const = 0;
+	virtual int toRelPitIdx(int absPitIdx) const = 0;
 };
 
 #endif /* BOARD_H_ */

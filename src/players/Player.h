@@ -18,11 +18,13 @@ using namespace std;
 
 class Player {
 	string name;
+	friend std::ostream &operator<<(std::ostream &out, const Player &player);
 
 public:
 	class Move {
 		Player *player;
 		int pitIndex;
+
 	public:
 		Move(Player &player, int pitIndex) : player(&player), pitIndex(pitIndex) { }
 
@@ -33,7 +35,7 @@ public:
 	Player(const string &name);
 	virtual ~Player();
 
-	const string &getName();
+	const string &getName() const;
 	virtual Player::Move *getNextMove(const Board &board) = 0;
 };
 
