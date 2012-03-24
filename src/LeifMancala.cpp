@@ -16,6 +16,9 @@
 #include <cstdlib>
 
 void playGame(Board& board);
+void newStandardGame();
+void newQuickGame(int computerPlayers);
+void help();
 
 int readInt() {
    string strInput;
@@ -43,12 +46,16 @@ void mainMenu() {
 		choose = false;
 		switch (choice) {
 		case 1:
+			newStandardGame();
 			break;
 		case 2:
+			help();
 			break;
 		case 3:
+			newQuickGame(1);
 			break;
 		case 4:
+			newQuickGame(2);
 			break;
 		default:
 			choose = true;
@@ -58,13 +65,27 @@ void mainMenu() {
 	}
 }
 
+void newQuickGame(int computerPlayers) {
+	string playerName;
+	vector<Player*> players;
+	playerName = "Puny Human";
+	players.push_back(new HumanPlayer(playerName));
+	for (int i = 0; i < computerPlayers; ++i)
+		players.push_back(new RandomPlayer());
 
+	int pitsPerPlayer = 6;
+	int seedsPerHouse = 7;
+
+	Board* board = new StandardBoard(players, pitsPerPlayer, seedsPerHouse);
+	playGame(*board);
+	delete board;
+}
 
 void newStandardGame() {
 	cout << "Add a human player by entering it's name and pressing <Enter>."
 			" Enter a blank line to stop.\n\n";
 
-	string playerName = "0";
+	string playerName;
 	vector<Player*> players;
 	int i = 0;
 	while (!playerName.empty()) {
@@ -105,42 +126,7 @@ void playGame(Board& board) {
 }
 
 int main() {
-	srand(time(NULL));
 
-	newStandardGame();
-	string name ("Human");
-	string name2 ("Human 2");
-	string name3 ("Mr man");
-	Player *p1 = new HumanPlayer (name);
-	//Player *p2 = new RandomPlayer ();
-	Player *p2 = new RandomPlayer;
-	Player *p3 = new RandomPlayer;
-	vector<Player*> players;
-	players.push_back(p1);
-	players.push_back(p2);
-	players.push_back(p3);
-
-	int pi;
-	Player::Move *move;
-	Board *board = new StandardBoard(players, 7, 5);
-	while (!board->isGameOver()) {
-		cout << *board << "\n\n";
-
-		if (board->isMyTurn(*p1)) {
-			//pi = readInt();
-			cout << "Make move: ";
-			cin >> pi;
-			move = new Player::Move(*p1, board->toAbsPitIdx(pi));
-			board->move(*move);
-		} else {
-			//board->move(*board->whosTurn().getNextMove(*board));
-		}
-	}
-	cout << "Game Over!" << endl;
-
-	delete board;
-	delete move;
-	return 0;
 }
 
 
