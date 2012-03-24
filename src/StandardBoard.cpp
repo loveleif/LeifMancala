@@ -62,6 +62,7 @@ void StandardBoard::move(Player::Move &move) {
 
 
 	int lastSownIndex = sow(move.getPitIndex());
+
 	if (pits[lastSownIndex]->getSeedCount() == 1)
 		capture(lastSownIndex, move.getPlayer());
 
@@ -79,7 +80,7 @@ void StandardBoard::move(Player::Move &move) {
 int StandardBoard::sow(int pitIndex) {
 	Pit *fromPit = pits[pitIndex];
 	while (!fromPit->isEmpty())
-		pits[incrPitIndex(pitIndex)]->add(fromPit->pop());
+		fromPit->popAndPush(*pits[incrPitIndex(pitIndex)]);
 	return pitIndex;
 }
 
@@ -89,30 +90,19 @@ void StandardBoard::capture(int pitIndex, const Player& capturingPlayer) {
 		return;
 
 	Pit *captureStore = &getStore(capturingPlayer);
+	int relPitIdx = toRelPitIdx(pitIndex);
 
 	if (&pits[pitIndex]->getOwner() != &capturingPlayer) {
 		// Captured pit does not belong to capturing player
 		pits[pitIndex]->popAndPushAll(*captureStore);
-		log() << "CAPTURE: " << capturingPlayer << " on " << pits[pitIndex]->getOwner() << "'s pit " << toRelPitIdx(pitIndex) << endl;
+		log() << "CAPTURE: " << capturingPlayer << " on " << pits[pitIndex]->getOwner() << "'s pit " << relPitIdx << endl;
 		return;
 	}
 
 	// Captured pit belongs to capturing player
-
-	int tmpPitIdx = pitIndex;
-	int stepsToLastStore = 1;
-	while (!pits[decrPitIndex(tmpPitIdx)]->isStore())
-		++stepsToLastStore;
-	int stepstoNextStore = pitsPerPlayer - stepsToLastStore;
-
-	// Seed transactions
-	for (unsigned int i = 0; i < players.size(); ++i) {
-		if (i % 2 == 0)
-			addPitIndex(pitIndex, 2 * stepstoNextStore);
-		else
-			addPitIndex(pitIndex, 2 * stepsToLastStore);
-
-		pits[pitIndex]->popAndPushAll(*captureStore);
+	for (int i = 0; i < pits.size(); ++i) {
+		if (toRelPitIdx(i) == relPitIdx)
+			pits[i]->popAndPushAll(*captureStore);
 	}
 	log() << "CAPTURE: " << capturingPlayer << " on everybodys pit " << toRelPitIdx(pitIndex) << endl;
 }
