@@ -39,6 +39,10 @@ class StandardBoard: public Board {
 	ostream &log();
 
 public:
+	static const int MIN_PLAYERS;
+	static const int MIN_PITS_PER_PLAYER;
+	static const int MIN_SEEDS_PER_HOUSE;
+
 	StandardBoard(const vector<Player*> &players, int pitsPerPlayer, int seedsPerHouse);
 	virtual ~StandardBoard();
 

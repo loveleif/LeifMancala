@@ -17,11 +17,15 @@
 using namespace std;
 
 const char StandardBoard::BLANK_PIT[] = "        ";
+const int StandardBoard::MIN_PLAYERS = 2;
+const int StandardBoard::MIN_PITS_PER_PLAYER = 2;
+const int StandardBoard::MIN_SEEDS_PER_HOUSE = 1;
 
 StandardBoard::StandardBoard(const vector<Player*> &players, int pitsPerPlayer, int seedsPerHouse)
 				: pitsPerPlayer(pitsPerPlayer), players(players), whosTurnIndex(0), gameOver(false) {
 	// Each player needs at least one house and one store
-	assert(pitsPerPlayer >= 2);
+	assert(pitsPerPlayer >= MIN_PITS_PER_PLAYER);
+	assert(seedsPerHouse >= MIN_SEEDS_PER_HOUSE);
 
 	// Create Pits and Seeds
 	Pit *house;
@@ -267,11 +271,9 @@ bool StandardBoard::isMyTurn(const Player &player) const {
 /*
  *  Adds pit indices that are "moveable" to the supplied vector. A pit is
  *  movable if it belongs to the current player in turn, is not a store and
- *  is not empty.
+ *  is not empty. The supplied vector will be
  */
 vector<int>& StandardBoard::getPossibleMoves(vector<int>& possibleMoves) const {
-	possibleMoves.clear();
-
 	int playerPitStart = whosTurnIndex * pitsPerPlayer;
 	int playerPitEnd = playerPitStart + pitsPerPlayer;
 	for (int pitIdx = playerPitStart; pitIdx < playerPitEnd; ++pitIdx)

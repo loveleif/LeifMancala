@@ -10,6 +10,8 @@
 
 #include <cstdlib>
 #include <vector>
+#include <iostream>
+#include <string>
 
 namespace Util {
 
@@ -23,6 +25,10 @@ namespace Util {
 	 * From: http://stackoverflow.com/questions/1082917/mod-of-negative-number-is-melting-my-brain
 	 */
 	int mod(int x, int m);
+
+	int readUserInt();
+	std::string& readUserString(std::string& input, const char* message);
+	std::string& readUserString(std::string& input);
 };
 
 #endif /* UTIL_H_ */
