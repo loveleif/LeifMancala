@@ -13,6 +13,7 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include <algorithm>
 #include "Util.h"
 using namespace std;
 
@@ -136,6 +137,20 @@ void StandardBoard::endGame() {
 		}
 	}
 	gameOver = true;
+	log() << "Game Over!\n\n"
+		  << "SCOREBOARD\n"
+		  << "==========\n\n";
+	vector<Player*> scoreboardPlayers (players);
+	sort(scoreboardPlayers.begin(), scoreboardPlayers.end(), *this);
+
+	vector<Player*>::iterator iterPl;
+	for (iterPl = scoreboardPlayers.begin(); iterPl != scoreboardPlayers.end(); ++iterPl) {
+		cout << (**iterPl).getName() << ": " << getStore(**iterPl).getValue() << endl;
+	}
+}
+
+bool StandardBoard::operator() (const Player* p1, const Player* p2) const {
+	return getStore(*p1).getValue() < getStore(*p2).getValue();
 }
 
 bool StandardBoard::checkGameOver() {

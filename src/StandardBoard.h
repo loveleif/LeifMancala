@@ -39,6 +39,7 @@ class StandardBoard: public Board {
 	ostream &log();
 	void endGame();
 
+
 public:
 	static const int MIN_PLAYERS;
 	static const int MIN_PITS_PER_PLAYER;
@@ -56,6 +57,7 @@ public:
 	string& toString(string& out) const;
 	int toAbsPitIdx(int relPitIdx) const;
 	int toRelPitIdx(int absPitIdx) const;
+	bool operator() (const Player* p1, const Player* p2) const;
 };
 
 #endif /* STANDARDBOARD_H_ */
