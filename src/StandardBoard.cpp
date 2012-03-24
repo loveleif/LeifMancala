@@ -320,7 +320,8 @@ vector<int>& StandardBoard::getPossibleMoves(vector<int>& possibleMoves) const {
 }
 
 int StandardBoard::toAbsPitIdx(int relPitIdx) const {
-	assert(relPitIdx < pitsPerPlayer);
+	if (relPitIdx < pitsPerPlayer)
+		return -10000; // Returns useless pitindex
 
 	bool reverse = whosTurnIndex % 2;
 	if (!reverse)

@@ -34,7 +34,7 @@ Player::Move HumanPlayer::getNextMove(const Board& board) {
 		iter = find(possibleMoves.begin(), possibleMoves.end(), pitIndex);
 
 		if (iter == possibleMoves.end())
-			cout << "Impossible move, please try again.\n";
+			cout << "Impossible move, please try again." << endl;
 		else
 			getInput = false;
 	}
