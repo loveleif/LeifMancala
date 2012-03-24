@@ -2,7 +2,7 @@
  * StandardBoard.cpp
  *
  *  Created on: Mar 16, 2012
- *      Author: toffe
+ *      Author: Kristofer Leifland
  */
 
 #include "StandardBoard.h"
@@ -58,7 +58,7 @@ void StandardBoard::move(Player::Move &move) {
 	assert(&move.getPlayer() == &(pits[move.getPitIndex()]->getOwner()));
 	assert(!pits[move.getPitIndex()]->isEmpty());
 
-	log() << "Move: " << move.getPlayer().getName() << " on pit " << toRelPitIdx(move.getPitIndex()) << " (relative)" << endl;
+	log() << "[MOVE]: " << move.getPlayer().getName() << " moves on pit " << toRelPitIdx(move.getPitIndex()) << endl;
 
 
 	int lastSownIndex = sow(move.getPitIndex());
@@ -95,21 +95,20 @@ void StandardBoard::capture(int pitIndex, const Player& capturingPlayer) {
 	if (&pits[pitIndex]->getOwner() != &capturingPlayer) {
 		// Captured pit does not belong to capturing player
 		pits[pitIndex]->popAndPushAll(*captureStore);
-		log() << "CAPTURE: " << capturingPlayer << " on " << pits[pitIndex]->getOwner() << "'s pit " << relPitIdx << endl;
+		log() << "[CAPTURE]: " << capturingPlayer << " captures " << pits[pitIndex]->getOwner() << "'s pit " << relPitIdx << endl;
 		return;
 	}
 
 	// Captured pit belongs to capturing player
-	for (int i = 0; i < pits.size(); ++i) {
+	for (unsigned int i = 0; i < pits.size(); ++i) {
 		if (toRelPitIdx(i) == relPitIdx)
 			pits[i]->popAndPushAll(*captureStore);
 	}
-	log() << "CAPTURE: " << capturingPlayer << " on everybodys pit " << toRelPitIdx(pitIndex) << endl;
+	log() << "[CAPTURE]: " << capturingPlayer << " captures pit on column " << toRelPitIdx(pitIndex) << endl;
 }
 
 void StandardBoard::printScoreBoard() const {
-	cout << "Game Over!\n\n"
-		 << "SCOREBOARD\n"
+	cout << "SCOREBOARD\n"
 		 << "==========\n\n";
 	vector<Player*> scoreboardPlayers (players);
 	sort(scoreboardPlayers.begin(), scoreboardPlayers.end(), *this);
@@ -127,7 +126,7 @@ void StandardBoard::nextTurn(int lastSownIndex) {
 	if (&*pits[lastSownIndex] != &getStore(whosTurn()))
 		whosTurnIndex = (whosTurnIndex + 1) % players.size();
 
-	log() << whosTurn() << "'s turn." << endl;
+	log() << "[TURN]: " << whosTurn() << "'s turn." << endl;
 }
 
 void StandardBoard::endGame() {
@@ -139,7 +138,7 @@ void StandardBoard::endGame() {
 			(**iter).popAndPushAll(getStore((**iter).getOwner()));
 		}
 	}
-	log() << "Game Over!\n";
+	log() << "------- Game Over! -------\n";
 	gameOver = true;
 }
 
