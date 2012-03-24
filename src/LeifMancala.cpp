@@ -136,12 +136,38 @@ void playGame(Board& board) {
 
 int main() {
 	srand(time(NULL));
-	//newStandardGame();
-	mainMenu();
+	help();
+	//mainMenu();
 }
 
 void help() {
-
+	cout << "\n"
+		 << "Help\n"
+		 << "====\n\n"
+		 << "Glossary:\n\n"
+		 << "pit - Pits are holes in the Mancala board that can hold seed. Every "
+		 << "pit has a owning player. There are two kind of pits; houses and stores. "
+		 << "Every pit is connected to two other pits. If you move from pit to pit, in the same direction, you'll "
+		 << "always end up where you started eventually.\n\n"
+		 << "house - House is a kind of pit. Houses are the pits that the player"
+		 << "can move on. Houses look like this: ( <seed count> )\n\n"
+		 << "store - Store is a kind of pit. Seeds can never move out of a store. "
+		 << "Stores looks like this: [[ <seed count> ]].\n\n"
+		 << "move - There's only one move. It's when you pick one house and sow all"
+		 << " seed in that house in the subsequent pits. One seed at a time\n\n"
+		 << "sow - sowing is done in the direction indicated with arrows on the board."
+		 << " Sowing is always done one seed at a time and then move to next pit.\n\n"
+		 << "capture - If the last sown seed is at a house that house will be captured. "
+		 << "If the captured house is your own you will capture all seed from that column. If "
+		 << "the captured house belongs to an opponent you will capture that one seed you just "
+		 << "left there. Captured seed is moved to the capturing player's store.\n\n"
+		 << "Gameplay:\n\n"
+		 << "The objective of the game is to get as many seeds as possible in your store. You can "
+		 << "gain seed in your store by:\n"
+		 << "1) Capturing seed.\n"
+		 << "2) Sowing seed on the store.\n"
+		 << "3) If you have seed left in your houses when the game is over they will be moved to your store.\n"
+		 << "The game is over when any of the players have no seed left in his or her houses.";
 }
 
 
