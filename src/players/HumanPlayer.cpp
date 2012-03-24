@@ -20,7 +20,7 @@ HumanPlayer::~HumanPlayer() {
 	// TODO Auto-generated destructor stub
 }
 
-Player::Move& HumanPlayer::getNextMove(Player::Move& input, const Board& board) {
+Player::Move HumanPlayer::getNextMove(const Board& board) {
 	vector<int> possibleMoves;
 	board.getPossibleMoves(possibleMoves);
 
@@ -38,6 +38,5 @@ Player::Move& HumanPlayer::getNextMove(Player::Move& input, const Board& board) 
 		else
 			getInput = false;
 	}
-	input = Player::Move(*this, pitIndex);
-	return input;
+	return Player::Move(*this, pitIndex);
 }

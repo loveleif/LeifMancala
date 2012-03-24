@@ -58,6 +58,8 @@ void mainMenu() {
 	}
 }
 
+
+
 void newStandardGame() {
 	cout << "Add a human player by entering it's name and pressing <Enter>."
 			" Enter a blank line to stop.\n\n";
@@ -97,7 +99,8 @@ void newStandardGame() {
 void playGame(Board& board) {
 	while(!board.isGameOver()) {
 		cout << board;
-		//board.move(*board.whosTurn().getNextMove(board));
+		Player::Move move = board.whosTurn().getNextMove(board);
+		board.move(move);
 	}
 }
 
