@@ -20,7 +20,8 @@ public:
 
 	virtual string& toString(string& out) const = 0;
 	virtual void move(Player::Move &move) = 0;
-	virtual int countPoints(const Player &player) const = 0;
+	virtual int countStoreValue(const Player &player) const = 0;
+	virtual int countHouseValue(const Player &player) const = 0;
 	virtual bool isGameOver() const = 0;
 	virtual Player& whosTurn() const = 0;
 	virtual bool isMyTurn(const Player &player) const = 0;

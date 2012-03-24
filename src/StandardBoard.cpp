@@ -60,11 +60,13 @@ void StandardBoard::move(Player::Move &move) {
 
 	log() << "Move: " << move.getPlayer().getName() << " on pit " << toRelPitIdx(move.getPitIndex()) << " (relative)" << endl;
 
+
 	int lastSownIndex = sow(move.getPitIndex());
 	if (pits[lastSownIndex]->getSeedCount() == 1)
 		capture(lastSownIndex, move.getPlayer());
 
 	nextTurn(lastSownIndex);
+
 }
 
 /*
@@ -157,7 +159,7 @@ bool StandardBoard::checkGameOver() {
 	vector<Player*>::const_iterator iter;
 
 	for (iter = players.begin(); iter != players.end(); ++iter) {
-		if (countPoints(**iter) == getStore(**iter).getValue()) {
+		if (countHouseValue(**iter) == 0) {
 			endGame();
 			return isGameOver();
 		}
@@ -165,7 +167,26 @@ bool StandardBoard::checkGameOver() {
 	return isGameOver();
 }
 
-int &StandardBoard::incrPitIndex(int &pitIndex) const {
+int StandardBoard::countStoreValue(const Player& player) const {
+	return getStore(player).getValue();
+}
+
+int StandardBoard::countHouseValue(const Player& player) const {
+	vector<Pit*>::const_iterator iter;
+	bool okToReturn = false;
+	int houseValue = 0;
+	for (iter = pits.begin(); iter != pits.end(); ++iter) {
+		if (&(**iter).getOwner() == &player && !(**iter).isStore()) {
+			houseValue += (**iter).getValue();
+			okToReturn = true;
+		} else if (okToReturn) {
+			return houseValue;
+		}
+	}
+	throw logic_error("Didn't find Player.");
+}
+
+int& StandardBoard::incrPitIndex(int &pitIndex) const {
 	return addPitIndex(pitIndex, 1);
 }
 
@@ -188,10 +209,6 @@ Pit& StandardBoard::getStore(const Player &player) const {
 		pitIndex += pitsPerPlayer;
 	}
 	throw logic_error("Didn't find store.");
-}
-
-int StandardBoard::countPoints(const Player &player) const {
-	return getStore(player).getValue();
 }
 
 bool StandardBoard::isGameOver() const {

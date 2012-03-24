@@ -49,7 +49,8 @@ public:
 	virtual ~StandardBoard();
 
 	void move(Player::Move& move);
-	int countPoints(const Player& player) const;
+	int countStoreValue(const Player& player) const;
+	int countHouseValue(const Player& player) const;
 	bool isGameOver() const;
 	Player& whosTurn() const;
 	bool isMyTurn(const Player& player) const;

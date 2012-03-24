@@ -85,7 +85,7 @@ void newStandardGame() {
 	cout << "Add a human player by entering it's name and pressing <Enter>."
 			" Enter a blank line to stop.\n\n";
 
-	string playerName;
+	string playerName ("0");
 	vector<Player*> players;
 	int i = 0;
 	while (!playerName.empty()) {
@@ -126,7 +126,7 @@ void playGame(Board& board) {
 }
 
 int main() {
-
+	mainMenu();
 }
 
 void help() {
