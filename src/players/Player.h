@@ -36,7 +36,7 @@ public:
 	virtual ~Player();
 
 	const string &getName() const;
-	virtual Player::Move *getNextMove(const Board &board) = 0;
+	virtual Player::Move& getNextMove(Player::Move& input, const Board &board) = 0;
 };
 
 #endif /* PLAYER_H_ */
