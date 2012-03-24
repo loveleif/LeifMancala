@@ -127,7 +127,7 @@ void newStandardGame() {
 
 void playGame(Board& board) {
 	while(!board.isGameOver()) {
-		cout << board;
+		cout << "\n" << board << endl;
 		Player::Move move = board.whosTurn().getNextMove(board);
 		board.move(move);
 	}
