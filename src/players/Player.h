@@ -6,8 +6,6 @@
  *      Author: Kristofer Leifland
  */
 
-
-
 #ifndef PLAYER_H_
 #define PLAYER_H_
 
@@ -22,6 +20,10 @@ class Player {
 	friend std::ostream &operator<<(std::ostream &out, const Player &player);
 
 public:
+	/*
+	 * Class representing a action that can be executed by a player during game
+	 * play.
+	 */
 	class Move {
 		Player *player;
 		int pitIndex;
