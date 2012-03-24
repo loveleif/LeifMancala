@@ -7,6 +7,7 @@
 
 #include "Util.h"
 #include <iostream>
+#include <sstream>
 using namespace std;
 int Util::mod(int x, int m) {
 	    int r = x%m;
@@ -14,13 +15,15 @@ int Util::mod(int x, int m) {
 }
 
 int Util::readUserInt() {
-	int choice;
-	while (!(cin >> choice)) {
-		cin.clear();
-		cin.ignore();
-		cout << "\nIncorrect entry. Try again: ";
+	string input;
+	std::istringstream i(readUserString(input));
+	int number;
+	char c;
+	while (!(i >> number) || i.get(c)) {
+		cout << "Failed to read integer. Please try again: ";
+		i.str(readUserString(input));
 	}
-	return choice;
+	return number;
 }
 
 string& Util::readUserString(string& input, const char* message) {

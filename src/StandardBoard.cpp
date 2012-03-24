@@ -19,7 +19,7 @@ using namespace std;
 
 const char StandardBoard::BLANK_PIT[] = "        ";
 const int StandardBoard::MIN_PLAYERS = 2;
-const int StandardBoard::MIN_PITS_PER_PLAYER = 2;
+const int StandardBoard::MIN_PITS_PER_PLAYER = 3;
 const int StandardBoard::MIN_SEEDS_PER_HOUSE = 1;
 
 StandardBoard::StandardBoard(const vector<Player*> &players, int pitsPerPlayer, int seedsPerHouse)
@@ -83,7 +83,7 @@ int StandardBoard::sow(int pitIndex) {
 	return pitIndex;
 }
 
-void StandardBoard::capture(int pitIndex, const Player &capturingPlayer) {
+void StandardBoard::capture(int pitIndex, const Player& capturingPlayer) {
 	// Captured pit is store
 	if (pits[pitIndex]->isStore())
 		return;
@@ -93,7 +93,7 @@ void StandardBoard::capture(int pitIndex, const Player &capturingPlayer) {
 	if (&pits[pitIndex]->getOwner() != &capturingPlayer) {
 		// Captured pit does not belong to capturing player
 		pits[pitIndex]->popAndPushAll(*captureStore);
-		log() << "Capture: " << capturingPlayer << " on pit " << pitIndex << " (absolute)" << endl;
+		log() << "CAPTURE: " << capturingPlayer << " on " << pits[pitIndex]->getOwner() << "'s pit " << toRelPitIdx(pitIndex) << endl;
 		return;
 	}
 
@@ -106,7 +106,6 @@ void StandardBoard::capture(int pitIndex, const Player &capturingPlayer) {
 	int stepstoNextStore = pitsPerPlayer - stepsToLastStore;
 
 	// Seed transactions
-	log() << "Capture: " << capturingPlayer << " on pits ";
 	for (unsigned int i = 0; i < players.size(); ++i) {
 		if (i % 2 == 0)
 			addPitIndex(pitIndex, 2 * stepstoNextStore);
@@ -114,9 +113,21 @@ void StandardBoard::capture(int pitIndex, const Player &capturingPlayer) {
 			addPitIndex(pitIndex, 2 * stepsToLastStore);
 
 		pits[pitIndex]->popAndPushAll(*captureStore);
-		log() << pitIndex << " ";
 	}
-	log() << " (absolute)" << endl;
+	log() << "CAPTURE: " << capturingPlayer << " on everybodys pit " << toRelPitIdx(pitIndex) << endl;
+}
+
+void StandardBoard::printScoreBoard() const {
+	cout << "Game Over!\n\n"
+		 << "SCOREBOARD\n"
+		 << "==========\n\n";
+	vector<Player*> scoreboardPlayers (players);
+	sort(scoreboardPlayers.begin(), scoreboardPlayers.end(), *this);
+
+	vector<Player*>::iterator iterPl;
+	for (iterPl = scoreboardPlayers.begin(); iterPl != scoreboardPlayers.end(); ++iterPl) {
+		cout << (**iterPl).getName() << ": " << getStore(**iterPl).getValue() << endl;
+	}
 }
 
 void StandardBoard::nextTurn(int lastSownIndex) {
@@ -138,21 +149,12 @@ void StandardBoard::endGame() {
 			(**iter).popAndPushAll(getStore((**iter).getOwner()));
 		}
 	}
+	log() << "Game Over!\n";
 	gameOver = true;
-	log() << "Game Over!\n\n"
-		  << "SCOREBOARD\n"
-		  << "==========\n\n";
-	vector<Player*> scoreboardPlayers (players);
-	sort(scoreboardPlayers.begin(), scoreboardPlayers.end(), *this);
-
-	vector<Player*>::iterator iterPl;
-	for (iterPl = scoreboardPlayers.begin(); iterPl != scoreboardPlayers.end(); ++iterPl) {
-		cout << (**iterPl).getName() << ": " << getStore(**iterPl).getValue() << endl;
-	}
 }
 
 bool StandardBoard::operator() (const Player* p1, const Player* p2) const {
-	return getStore(*p1).getValue() < getStore(*p2).getValue();
+	return getStore(*p1).getValue() > getStore(*p2).getValue();
 }
 
 bool StandardBoard::checkGameOver() {
@@ -238,7 +240,8 @@ string& StandardBoard::indexBar(string& out) const {
 	for (int i = 0; i < pitsPerPlayer - 1; ++i)
 		sstm << "   " << i+1 << "  ";
 	sstm << "\n";
-	sstm << "------------------------------------";
+	for (int i = 0; i < pitsPerPlayer - 1; ++i)
+		sstm << "-------";
 	sstm << "\n" << endl;
 	out = sstm.str();
 	return out;
@@ -300,12 +303,11 @@ string& StandardBoard::toString(string& out) const {
 			 << (playerTurn ? "<-  " : "    ")
 			 << "\n";
 
-		if (!reverse)
+		if (!reverse) {
 			sstm << string(houses.size() - 8, ' ');
+		}
 		sstm << *pits[(playerIdx + 1) * pitsPerPlayer - 1] << "\n";
-
 	}
-
 	out = sstm.str();
 	return out;
 }
@@ -350,3 +352,4 @@ int StandardBoard::toRelPitIdx(int absPitIdx) const {
 ostream &StandardBoard::log() {
 	return cout;
 }
+

@@ -59,6 +59,7 @@ public:
 	int toAbsPitIdx(int relPitIdx) const;
 	int toRelPitIdx(int absPitIdx) const;
 	bool operator() (const Player* p1, const Player* p2) const;
+	void printScoreBoard() const;
 };
 
 #endif /* STANDARDBOARD_H_ */

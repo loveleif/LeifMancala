@@ -28,6 +28,7 @@ public:
 	virtual vector<int>& getPossibleMoves(vector<int>& possibleMoves) const = 0;
 	virtual int toAbsPitIdx(int relPitIdx) const = 0;
 	virtual int toRelPitIdx(int absPitIdx) const = 0;
+	virtual void printScoreBoard() const = 0;
 };
 
 #endif /* BOARD_H_ */

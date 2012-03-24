@@ -84,14 +84,17 @@ void newQuickGame(int computerPlayers) {
 void newStandardGame() {
 	cout << "Add a human player by entering it's name and pressing <Enter>."
 			" Enter a blank line to stop.\n\n";
-
+	bool readHumanPlayers = true;
 	string playerName ("0");
 	vector<Player*> players;
 	int i = 0;
 	while (!playerName.empty()) {
 		cout << "Human player " << ++i << ": ";
 		Util::readUserString(playerName);
-		players.push_back(new HumanPlayer(playerName));
+		if (playerName.empty())
+			readHumanPlayers = false;
+		else
+			players.push_back(new HumanPlayer(playerName));
 	}
 
 	cout << "\n\n"
@@ -106,13 +109,17 @@ void newStandardGame() {
 
 	cout << "\n\n"
 		 << "How many pits would you like per player, including the store (min " << StandardBoard::MIN_PITS_PER_PLAYER << "): ";
-	int pitsPerPlayer = min(Util::readUserInt(), StandardBoard::MIN_PITS_PER_PLAYER);
+	int pitsPerPlayer = max(Util::readUserInt(), StandardBoard::MIN_PITS_PER_PLAYER);
 
 	cout << "\n\n"
 		 << "How many seeds would you like in each pit: ";
-	int seedsPerHouse = min(Util::readUserInt(), StandardBoard::MIN_SEEDS_PER_HOUSE);
+	int seedsPerHouse = max(Util::readUserInt(), StandardBoard::MIN_SEEDS_PER_HOUSE);
 
+	cout << pitsPerPlayer << endl << seedsPerHouse << endl;
+	for (int i = 0; i < players.size(); ++i)
+		cout << i << " " << players[i]->getName() << endl;
 	Board* board = new StandardBoard(players, pitsPerPlayer, seedsPerHouse);
+
 	playGame(*board);
 	delete board;
 }
@@ -123,9 +130,11 @@ void playGame(Board& board) {
 		Player::Move move = board.whosTurn().getNextMove(board);
 		board.move(move);
 	}
+	board.printScoreBoard();
 }
 
 int main() {
+	//newStandardGame();
 	mainMenu();
 }
 
