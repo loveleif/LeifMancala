@@ -31,7 +31,7 @@ public:
 	void popAndPushAll(Pit &pushPit);
 	bool isEmpty() const;
 	bool isStore() const;
-	const Player *getOwner() const;
+	const Player& getOwner() const;
 	int getValue() const;
 	int getSeedCount() const;
 	std::string toString() const;

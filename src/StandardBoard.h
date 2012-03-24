@@ -37,6 +37,7 @@ class StandardBoard: public Board {
 	string& pitsToString(string &out, unsigned int fromIdx, int n) const;
 	string& indexBar(string &out) const;
 	ostream &log();
+	void endGame();
 
 public:
 	static const int MIN_PLAYERS;

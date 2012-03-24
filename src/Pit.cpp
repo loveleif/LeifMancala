@@ -36,8 +36,8 @@ bool Pit::isStore() const {
 	return mIsStore;
 }
 
-const Player *Pit::getOwner() const {
-	return owner;
+const Player& Pit::getOwner() const {
+	return *owner;
 }
 
 void Pit::popAndPush(Pit &pushPit) {

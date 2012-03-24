@@ -54,7 +54,7 @@ StandardBoard::~StandardBoard() {
 
 void StandardBoard::move(Player::Move &move) {
 	assert(!isGameOver());
-	assert(&move.getPlayer() == &*(pits[move.getPitIndex()]->getOwner()));
+	assert(&move.getPlayer() == &(pits[move.getPitIndex()]->getOwner()));
 	assert(!pits[move.getPitIndex()]->isEmpty());
 
 	log() << "Move: " << move.getPlayer().getName() << " on pit " << toRelPitIdx(move.getPitIndex()) << " (relative)" << endl;
@@ -87,7 +87,7 @@ void StandardBoard::capture(int pitIndex, const Player &capturingPlayer) {
 
 	Pit *captureStore = &getStore(capturingPlayer);
 
-	if (&*pits[pitIndex]->getOwner() != &capturingPlayer) {
+	if (&pits[pitIndex]->getOwner() != &capturingPlayer) {
 		// Captured pit does not belong to capturing player
 		pits[pitIndex]->popAndPushAll(*captureStore);
 		log() << "Capture: " << capturingPlayer << " on pit " << pitIndex << " (absolute)" << endl;
@@ -126,14 +126,28 @@ void StandardBoard::nextTurn(int lastSownIndex) {
 	log() << whosTurn() << "'s turn." << endl;
 }
 
-bool StandardBoard::checkGameOver() {
+void StandardBoard::endGame() {
 	vector<Pit*>::iterator iter;
 
+	// All remaining Seed will be moved to the current owners store
 	for (iter = pits.begin(); iter != pits.end(); ++iter) {
-		if (!(*iter)->isStore() && (*iter)->getSeedCount() > 0)
-			return false;
+		if (!(**iter).isStore()) {
+			(**iter).popAndPushAll(getStore((**iter).getOwner()));
+		}
 	}
-	return gameOver = true;
+	gameOver = true;
+}
+
+bool StandardBoard::checkGameOver() {
+	vector<Player*>::const_iterator iter;
+
+	for (iter = players.begin(); iter != players.end(); ++iter) {
+		if (countPoints(**iter) == getStore(**iter).getValue()) {
+			endGame();
+			return isGameOver();
+		}
+	}
+	return isGameOver();
 }
 
 int &StandardBoard::incrPitIndex(int &pitIndex) const {
@@ -154,7 +168,7 @@ Pit& StandardBoard::getStore(const Player &player) const {
 	while (pitIndex < pits.size()) {
 		pit = pits[pitIndex];
 		assert(pit->isStore()); // Just to be on the safe side
-		if (&*(pit->getOwner()) == &player)
+		if (&(pit->getOwner()) == &player)
 			return *pit;
 		pitIndex += pitsPerPlayer;
 	}
