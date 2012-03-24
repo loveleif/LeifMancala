@@ -2,8 +2,9 @@
  * LeifMancala.cpp
  *
  *  Created on: Mar 16, 2012
- *      Author: toffe
+ *      Author: Kristofer Leifland
  */
+
 #include "StandardBoard.h"
 #include "players/HumanPlayer.h"
 #include "players/RandomPlayer.h"
@@ -11,9 +12,9 @@
 #include "Util.h"
 #include <string>
 #include <vector>
-#include <iostream>
 #include <time.h>
 #include <cstdlib>
+#include <iostream>
 
 void playGame(Board& board);
 void newStandardGame();
@@ -88,7 +89,7 @@ void newStandardGame() {
 	string playerName ("0");
 	vector<Player*> players;
 	int i = 0;
-	while (!playerName.empty()) {
+	while (readHumanPlayers) {
 		cout << "Human player " << ++i << ": ";
 		Util::readUserString(playerName);
 		if (playerName.empty())
@@ -116,7 +117,7 @@ void newStandardGame() {
 	int seedsPerHouse = max(Util::readUserInt(), StandardBoard::MIN_SEEDS_PER_HOUSE);
 
 	cout << pitsPerPlayer << endl << seedsPerHouse << endl;
-	for (int i = 0; i < players.size(); ++i)
+	for (unsigned int i = 0; i < players.size(); ++i)
 		cout << i << " " << players[i]->getName() << endl;
 	Board* board = new StandardBoard(players, pitsPerPlayer, seedsPerHouse);
 
@@ -134,6 +135,7 @@ void playGame(Board& board) {
 }
 
 int main() {
+	srand(time(NULL));
 	//newStandardGame();
 	mainMenu();
 }

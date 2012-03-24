@@ -2,7 +2,7 @@
  * Player.cpp
  *
  *  Created on: Mar 16, 2012
- *      Author: toffe
+ *      Author: Kristofer Leifland
  */
 
 #include "Player.h"

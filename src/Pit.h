@@ -1,8 +1,9 @@
 /*
  * Pit.h
+ * Class representing a mancala pit.
  *
  *  Created on: Mar 16, 2012
- *      Author: toffe
+ *      Author: Kristofer Leifland
  */
 
 #ifndef PIT_H_

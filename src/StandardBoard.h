@@ -1,8 +1,9 @@
 /*
  * StandardBoard.h
+ * Provides game logic for the standard LeifMancala game.
  *
  *  Created on: Mar 16, 2012
- *      Author: toffe
+ *      Author: Kristofer Leifland
  */
 
 #ifndef STANDARDBOARD_H_
@@ -11,9 +12,6 @@
 #include "Pit.h"
 #include "players/Player.h"
 #include "Board.h"
-#include <vector>
-#include <string>
-
 
 class StandardBoard: public Board {
 	vector<Pit*> pits;

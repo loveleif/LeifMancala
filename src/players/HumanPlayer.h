@@ -1,8 +1,9 @@
 /*
  * HumanPlayer.h
+ * Player that uses textual user input to generate moves in getNextMove().
  *
  *  Created on: Mar 16, 2012
- *      Author: toffe
+ *      Author: Kristofer Leifland
  */
 
 #ifndef HUMANPLAYER_H_

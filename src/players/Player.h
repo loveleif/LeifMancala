@@ -1,8 +1,9 @@
 /*
  * Player.h
+ * Base class for a LeifMancala player.
  *
  *  Created on: Mar 16, 2012
- *      Author: toffe
+ *      Author: Kristofer Leifland
  */
 
 

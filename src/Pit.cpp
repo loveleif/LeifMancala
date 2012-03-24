@@ -2,12 +2,11 @@
  * Pit.cpp
  *
  *  Created on: Mar 16, 2012
- *      Author: toffe
+ *      Author: Kristofer Leifland
  */
 
 #include "Pit.h"
 #include <cassert>
-#include <string>
 #include <sstream>
 #include <iomanip>
 

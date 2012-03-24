@@ -1,6 +1,6 @@
 /*
  * RandomPlayer.h
- * Random player picks moves on random.
+ * Player that picks moves on random.
  *
  *  Created on: Mar 18, 2012
  *      Author: Kristofer Leifland

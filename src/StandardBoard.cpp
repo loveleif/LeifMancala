@@ -6,15 +6,14 @@
  */
 
 #include "StandardBoard.h"
-#include "players/Player.h"
-#include <vector>
+#include "Util.h"
 #include <cassert>
 #include <stdexcept>
 #include <string>
 #include <sstream>
 #include <iostream>
 #include <algorithm>
-#include "Util.h"
+
 using namespace std;
 
 const char StandardBoard::BLANK_PIT[] = "        ";

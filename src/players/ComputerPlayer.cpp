@@ -2,7 +2,7 @@
  * ComputerPlayer.cpp
  *
  *  Created on: Mar 17, 2012
- *      Author: toffe
+ *      Author: Kristofer Leifland
  */
 
 #include "ComputerPlayer.h"

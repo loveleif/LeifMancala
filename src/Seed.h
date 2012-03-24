@@ -1,5 +1,6 @@
 /*
  * Seed.h
+ * Class representing a seed.
  *
  *  Created on: Mar 16, 2012
  *      Author: Kristofer Leifland

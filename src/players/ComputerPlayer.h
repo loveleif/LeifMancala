@@ -1,8 +1,9 @@
 /*
  * ComputerPlayer.h
+ * Abstract class that handles automatic naming for it's sub classes.
  *
  *  Created on: Mar 17, 2012
- *      Author: toffe
+ *      Author: Kristofer Leifland
  */
 
 #ifndef COMPUTERPLAYER_H_

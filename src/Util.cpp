@@ -2,13 +2,14 @@
  * Util.cpp
  *
  *  Created on: Mar 18, 2012
- *      Author: toffe
+ *      Author: Kristofer Leifland
  */
 
 #include "Util.h"
-#include <iostream>
 #include <sstream>
+#include <iostream>
 using namespace std;
+
 int Util::mod(int x, int m) {
 	    int r = x%m;
 	    return r<0 ? r+m : r;
@@ -26,10 +27,6 @@ int Util::readUserInt() {
 	return number;
 }
 
-string& Util::readUserString(string& input, const char* message) {
-	cout << message;
-	return readUserString(input);
-}
 
 string& Util::readUserString(string& input) {
 	getline(cin, input);

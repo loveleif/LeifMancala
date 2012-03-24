@@ -1,8 +1,9 @@
 /*
  * Board.h
+ * Base class for the game board. Board is responsible for all game logic.
  *
  *  Created on: Mar 16, 2012
- *      Author: toffe
+ *      Author: Kristofer Leifland
  */
 
 #ifndef BOARD_H_
