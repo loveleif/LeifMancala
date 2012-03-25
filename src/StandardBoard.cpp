@@ -91,7 +91,7 @@ void StandardBoard::capture(int pitIndex, const Player& capturingPlayer) {
 		if (toRelPitIdx(i) == relPitIdx)
 			pits[i]->popAndPushAll(*captureStore);
 	}
-	log() << "[CAPTURE]: " << capturingPlayer << " captures pit on column " << toRelPitIdx(pitIndex) << endl;
+	log() << "[CAPTURE]: " << capturingPlayer << " captures all pits on column " << toRelPitIdx(pitIndex) << endl;
 }
 
 void StandardBoard::printScoreBoard() const {
