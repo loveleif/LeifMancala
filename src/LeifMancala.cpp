@@ -137,8 +137,7 @@ void playGame(Board& board) {
 
 int main() {
 	srand(time(NULL));
-	help();
-	//mainMenu();
+	mainMenu();
 }
 
 void help() {
