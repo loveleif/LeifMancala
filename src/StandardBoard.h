@@ -43,6 +43,10 @@ public:
 	static const int MIN_PITS_PER_PLAYER;
 	static const int MIN_SEEDS_PER_HOUSE;
 
+	/*
+	 * Constructs a StandardBoard. pitsPerPlayer has to be >= MIN_PITS_PER_PLAYER
+	 * seedsPerHouse has to be >= MIN_SEEDS_PER_HOUSE.
+	 */
 	StandardBoard(const vector<Player*> &players, int pitsPerPlayer, int seedsPerHouse);
 	virtual ~StandardBoard();
 
