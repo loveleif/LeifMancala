@@ -112,9 +112,9 @@ void StandardBoard::nextTurn(int lastSownIndex) {
 
 	if (&*pits[lastSownIndex] != &getStore(whosTurn())) {
 		whosTurnIndex = (whosTurnIndex + 1) % players.size();
-		log() << "[TURN]: " << whosTurn() << " get another turn." << endl;
-	} else {
 		log() << "[TURN]: " << whosTurn() << "'s turn." << endl;
+	} else {
+		log() << "[TURN]: " << whosTurn() << " get another turn." << endl;
 	}
 }
 
