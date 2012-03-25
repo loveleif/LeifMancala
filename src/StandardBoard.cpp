@@ -46,15 +46,13 @@ StandardBoard::~StandardBoard() {
 	//
 	// vector<Player*> players - will get out of scope and destructed automatically
 	// the vector destructor will destruct all the containing Players.
-
-
-	// TODO Auto-generated destructor stub
 }
 
 void StandardBoard::move(Player::Move &move) {
 	assert(!isGameOver());
 	assert(&move.getPlayer() == &(pits[move.getPitIndex()]->getOwner()));
 	assert(!pits[move.getPitIndex()]->isEmpty());
+	assert(&move.getPlayer() == &whosTurn());
 
 	log() << "[MOVE]: " << move.getPlayer().getName() << " moves on pit " << toRelPitIdx(move.getPitIndex()) << endl;
 
