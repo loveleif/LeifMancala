@@ -211,11 +211,13 @@ string& StandardBoard::pitsToString(string& out, unsigned int fromIdx, int n) co
 	return out;
 }
 
-string& StandardBoard::indexBar(string& out) const {
+string& StandardBoard::indexBar(string& out, unsigned int indent) const {
 	stringstream sstm;
+	sstm << string(indent, ' ');
 	for (int i = 0; i < pitsPerPlayer - 1; ++i)
 		sstm << "   " << i+1 << "  ";
 	sstm << "\n";
+	sstm << string(indent, ' ');
 	for (int i = 0; i < pitsPerPlayer - 1; ++i)
 		sstm << "-------";
 	sstm << "\n" << endl;
@@ -227,19 +229,34 @@ string& StandardBoard::toString2Players(string& out) const {
 	std::stringstream sstm;
 	string houses, tmp;
 
-	sstm << indexBar(tmp);
+	sstm << indexBar(tmp, 8);
 
 	// Player 1 houses
 	pitsToString(houses, 0, pitsPerPlayer - 1);
 	sstm << BLANK_PIT << "--->\n";
-	sstm << BLANK_PIT << houses << BLANK_PIT << " " << players[0]->getName() << "\n";
+	sstm << BLANK_PIT << houses << BLANK_PIT;
+
+	// Player 1 name
+	bool playerZeroTurn = isMyTurn(*players[0]);
+	sstm << (playerZeroTurn ? "  ->" : "    ")
+		 << players[0]->getName()
+		 << (playerZeroTurn ? "<-  " : "    ")
+		 << "\n";
 
 	// Player 1+2 stores
 	sstm << *pits[pitsPerPlayer - 1] << string (houses.size(), ' ') << *pits[2 * pitsPerPlayer - 1] << endl;
 
 	// Player 2 houses
 	pitsToString(houses, pits.size() - 2, -(pitsPerPlayer - 1));
-	sstm << BLANK_PIT << houses << BLANK_PIT << players[1]->getName() << "\n";
+	sstm << BLANK_PIT << houses << BLANK_PIT;
+
+
+	// Player 2 name
+	sstm << (!playerZeroTurn ? "  ->" : "    ")
+		 << players[1]->getName()
+		 << (!playerZeroTurn ? "<-  " : "    ")
+		 << "\n";
+
 	sstm << string (8 + houses.size() - 4, ' ') << "<---" << "\n";
 
 	out = sstm.str();
@@ -253,7 +270,7 @@ string& StandardBoard::toString(string& out) const {
 	stringstream sstm;
 	string houses, tmp;
 
-	sstm << indexBar(tmp);
+	sstm << indexBar(tmp, 0);
 
 	bool reverse = false, playerTurn;
 	int startIdx = 0, n;
@@ -273,7 +290,7 @@ string& StandardBoard::toString(string& out) const {
 			 << houses;
 
 		// Player name
-		playerTurn = this->isMyTurn(*players[playerIdx]);
+		playerTurn = isMyTurn(*players[playerIdx]);
 		sstm << (playerTurn ? "  ->" : "    ")
 			 << players[playerIdx]->getName()
 			 << (playerTurn ? "<-  " : "    ")

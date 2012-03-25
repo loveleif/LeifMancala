@@ -86,7 +86,7 @@ class StandardBoard: public Board {
 	/*
 	 * Sets the specified string to a relative pit index column heading
 	 */
-	string& indexBar(string &out) const;
+	string& indexBar(string &out, unsigned int indent) const;
 
 	/*
 	 * ostream for logging.
