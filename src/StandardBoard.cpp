@@ -110,10 +110,12 @@ void StandardBoard::nextTurn(int lastSownIndex) {
 	if(checkGameOver())
 		return;
 
-	if (&*pits[lastSownIndex] != &getStore(whosTurn()))
+	if (&*pits[lastSownIndex] != &getStore(whosTurn())) {
 		whosTurnIndex = (whosTurnIndex + 1) % players.size();
-
-	log() << "[TURN]: " << whosTurn() << "'s turn." << endl;
+		log() << "[TURN]: " << whosTurn() << " get another turn." << endl;
+	} else {
+		log() << "[TURN]: " << whosTurn() << "'s turn." << endl;
+	}
 }
 
 void StandardBoard::endGame() {
