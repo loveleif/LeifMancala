@@ -33,11 +33,6 @@ Player::Move HumanPlayer::getNextMove(const Board& board) {
 		vector<int>::iterator iter;
 		iter = find(possibleMoves.begin(), possibleMoves.end(), pitIndex);
 
-		cout << "Move " << pitIndex << endl;
-		cout << "PossMoves size: " << possibleMoves.size() << endl;
-		//for (int i = 0; possibleMoves.size(); ++i)
-		//	cout << "possMove " << possibleMoves[i] << endl;
-
 		if (iter == possibleMoves.end())
 			cout << "Impossible move, please try again." << endl;
 		else
