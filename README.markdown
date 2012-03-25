@@ -16,4 +16,4 @@ The game has been compiled successfully on linux (Ubuntu 11.10) with g++ using a
 License
 -------
 
-WTFPL
+[WTFPL 2.0](http://sam.zoy.org/wtfpl/) (Do What The F*k You Want To Public License).
