@@ -4,7 +4,7 @@ LeifMancala
 Introduction
 ------------
 
-This is a variant of the classic Mancala game written in C++ for a school project. It's all text based.
+This is a variant of the classic Mancala or Kalaha game written in C++ for a school project. It's all text based. The code is not that good :-(.
 
 How to run and compile
 ----------------------
