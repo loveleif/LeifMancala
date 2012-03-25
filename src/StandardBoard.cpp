@@ -114,7 +114,7 @@ void StandardBoard::nextTurn(int lastSownIndex) {
 		whosTurnIndex = (whosTurnIndex + 1) % players.size();
 		log() << "[TURN]: " << whosTurn() << "'s turn." << endl;
 	} else {
-		log() << "[TURN]: " << whosTurn() << " get another turn." << endl;
+		log() << "[TURN]: " << whosTurn() << " gets another turn." << endl;
 	}
 }
 
