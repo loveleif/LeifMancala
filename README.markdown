@@ -11,7 +11,7 @@ How to run and compile
 
 The game is run from the main method in LeifMancala.cpp.
 
-The game has been compiled successfully on linux (Ubuntu 11.10) with g++ using a auto generated make file from Eclipse and on Windows (7) with Visual Studio 2010.
+The game has been compiled successfully on linux (Ubuntu 11.10) with g++ using an auto generated make file from Eclipse and on Windows (7) with Visual Studio 2010.
 
 License
 -------
