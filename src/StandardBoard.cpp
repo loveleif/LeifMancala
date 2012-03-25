@@ -56,23 +56,14 @@ void StandardBoard::move(Player::Move &move) {
 
 	log() << "[MOVE]: " << move.getPlayer().getName() << " moves on pit " << toRelPitIdx(move.getPitIndex()) << endl;
 
-
 	int lastSownIndex = sow(move.getPitIndex());
 
 	if (pits[lastSownIndex]->getSeedCount() == 1)
 		capture(lastSownIndex, move.getPlayer());
 
 	nextTurn(lastSownIndex);
-
 }
 
-/*
- * Sows all the seed from the specified pit index. Sowing will move around the
- * board and put one seed per pit until the sowing pit is depleted.
- *
- * pitIndex - index of pit to sow from
- * returns - pit index of the last pit to get sown
- */
 int StandardBoard::sow(int pitIndex) {
 	Pit *fromPit = pits[pitIndex];
 	while (!fromPit->isEmpty())
