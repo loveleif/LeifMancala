@@ -23,7 +23,6 @@ const int StandardBoard::MIN_SEEDS_PER_HOUSE = 1;
 
 StandardBoard::StandardBoard(const vector<Player*> &players, int pitsPerPlayer, int seedsPerHouse)
 				: pitsPerPlayer(pitsPerPlayer), players(players), whosTurnIndex(0), gameOver(false) {
-	// Each player needs at least one house and one store
 	assert(pitsPerPlayer >= MIN_PITS_PER_PLAYER);
 	assert(seedsPerHouse >= MIN_SEEDS_PER_HOUSE);
 
