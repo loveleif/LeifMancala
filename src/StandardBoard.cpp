@@ -275,7 +275,7 @@ string& StandardBoard::toString(string& out) const {
 	bool reverse = false, playerTurn;
 	int startIdx = 0, n;
 	for (unsigned int playerIdx = 0; playerIdx < players.size(); ++playerIdx) {
-		reverse = playerIdx % 2;
+		reverse = (playerIdx % 2) != 0;
 		if (reverse)
 			startIdx = (playerIdx + 1) * pitsPerPlayer - 2;
 		else
@@ -327,7 +327,7 @@ int StandardBoard::toAbsPitIdx(int relPitIdx) const {
 	if (relPitIdx < 1 || relPitIdx >= pitsPerPlayer)
 		return -10000; // Returns useless pitindex
 
-	bool reverse = whosTurnIndex % 2;
+	bool reverse = (whosTurnIndex % 2) != 0;
 	if (!reverse)
 		return relPitIdx + whosTurnIndex * pitsPerPlayer - 1;
 	else
@@ -336,7 +336,7 @@ int StandardBoard::toAbsPitIdx(int relPitIdx) const {
 
 int StandardBoard::toRelPitIdx(int absPitIdx) const {
 	int turnIndex = absPitIdx / pitsPerPlayer;
-	bool reverse = turnIndex % 2;
+	bool reverse = (turnIndex % 2) != 0;
 	if (!reverse)
 		return absPitIdx - turnIndex * pitsPerPlayer + 1;
 	else
