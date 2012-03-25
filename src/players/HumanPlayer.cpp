@@ -12,8 +12,7 @@
 #include <iostream>
 #include "../Util.h"
 
-HumanPlayer::HumanPlayer(string &name) : super(name) {
-	// TODO Auto-generated constructor stub
+HumanPlayer::HumanPlayer(string &name) : super(name), firstMove(true) {
 }
 
 HumanPlayer::~HumanPlayer() {
@@ -22,15 +21,25 @@ HumanPlayer::~HumanPlayer() {
 
 Player::Move HumanPlayer::getNextMove(const Board& board) {
 	vector<int> possibleMoves;
+	vector<int>::iterator iter;
 	board.getPossibleMoves(possibleMoves);
 
 	bool getInput = true;
 	int pitIndex;
 	while (getInput) {
-		cout << getName() << ", make your move: ";
+		cout << getName();
+		if (!firstMove) {
+			cout << ", make your move: ";
+		} else {
+			// A little help on the way for newbies
+			cout << ", make your move (possible moves are";
+			for (iter = possibleMoves.begin(); iter != possibleMoves.end(); ++iter)
+				cout << " " <<  board.toRelPitIdx(*iter);
+			cout << "):";
+			firstMove = false;
+		}
 		pitIndex = board.toAbsPitIdx(Util::readUserInt());
 
-		vector<int>::iterator iter;
 		iter = find(possibleMoves.begin(), possibleMoves.end(), pitIndex);
 
 		if (iter == possibleMoves.end())
@@ -38,5 +47,6 @@ Player::Move HumanPlayer::getNextMove(const Board& board) {
 		else
 			getInput = false;
 	}
+
 	return Player::Move(*this, pitIndex);
 }

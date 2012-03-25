@@ -12,6 +12,8 @@
 #include "Player.h"
 
 class HumanPlayer: public Player {
+	bool firstMove;
+
 	typedef Player super;
 public:
 	HumanPlayer(string &name);
