@@ -29,18 +29,18 @@ int readInt() {
 }
 
 void mainMenu() {
-	cout << "Welcome to LeifMancala!\n"
-		 << "=======================\n\n"
-		 << "Menu:\n"
-		 << "1. New game\n"
-		 << "2. Help\n"
-		 << "\nQuick Start:\n"
-		 << "3. One human against one computer player\n"
-		 << "4. One human against two computer players\n\n";
-
 	int choice;
 	bool choose = true;
 	while (choose) {
+		cout << "Welcome to LeifMancala!\n"
+			 << "=======================\n\n"
+			 << "Menu:\n"
+			 << "1. New game\n"
+			 << "2. Help\n"
+			 << "\nQuick Start:\n"
+			 << "3. One human against one computer player\n"
+			 << "4. One human against two computer players\n\n";
+
 		cout << "Make your choice: ";
 
 		choice = Util::readUserInt();
@@ -50,6 +50,7 @@ void mainMenu() {
 			newStandardGame();
 			break;
 		case 2:
+			choose = true;
 			help();
 			break;
 		case 3:
@@ -144,29 +145,31 @@ void help() {
 	cout << "\n"
 		 << "Help\n"
 		 << "====\n\n"
-		 << "Glossary:\n\n"
-		 << "pit - Pits are holes in the Mancala board that can hold seed. Every "
+		 << "Glossary\n"
+		 << "--------\n\n"
+		 << "### Pit\nPits are holes in the Mancala board that can hold seed. Every "
 		 << "pit has a owning player. There are two kind of pits; houses and stores. "
 		 << "Every pit is connected to two other pits. If you move from pit to pit, in the same direction, you'll "
 		 << "always end up where you started eventually.\n\n"
-		 << "house - House is a kind of pit. Houses are the pits that the player"
+		 << "### House\nHouse is a kind of pit. Houses are the pits that the player"
 		 << "can move on. Houses look like this: ( <seed count> )\n\n"
-		 << "store - Store is a kind of pit. Seeds can never move out of a store. "
+		 << "### Store\nStore is a kind of pit. Seeds can never move out of a store. "
 		 << "Stores looks like this: [[ <seed count> ]].\n\n"
-		 << "move - There's only one move. It's when you pick one house and sow all"
+		 << "### Move\nThere's only one move. It's when you pick one house and sow all"
 		 << " seed in that house in the subsequent pits. One seed at a time\n\n"
-		 << "sow - sowing is done in the direction indicated with arrows on the board."
+		 << "### Sowing\nSowing is done in the direction indicated with arrows on the board."
 		 << " Sowing is always done one seed at a time and then move to next pit.\n\n"
-		 << "capture - If the last sown seed is at a house that house will be captured. "
+		 << "### Capture\nIf the last sown seed is at a house that house will be captured. "
 		 << "If the captured house is your own you will capture all seed from that column. If "
 		 << "the captured house belongs to an opponent you will capture that one seed you just "
 		 << "left there. Captured seed is moved to the capturing player's store.\n\n"
-		 << "Gameplay:\n\n"
+		 << "Gameplay\n"
+		 << "--------\n\n"
 		 << "The objective of the game is to get as many seeds as possible in your store. You can "
 		 << "gain seed in your store by:\n"
-		 << "1) Capturing seed.\n"
-		 << "2) Sowing seed on the store.\n"
-		 << "3) If you have seed left in your houses when the game is over they will be moved to your store.\n"
+		 << "1. Capturing seed.\n"
+		 << "2. Sowing seed on the store.\n"
+		 << "3. If you have seed left in your houses when the game is over it will be moved to your store.\n"
 		 << "The game is over when any of the players have no seed left in his or her houses.";
 }
 
